@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// 爬可夢官網 ‧ Firestore 安全規則
+// 貼到 Firebase 主控台 → Firestore Database → 規則，然後按「發布」
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ⚠️ 把下面的 Email 換成你的管理員 Email（要和 firebase-config.js 的 ADMIN_EMAILS 一樣）
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'a1011755@gmail.com'
+        ];
+    }
+
+    // 網站文字、公告、設定：所有人可讀，只有管理員可改
+    match /site/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 相簿照片
+    match /gallery/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 前台編輯時上傳的圖片
+    match /uploads/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 後台登入紀錄：只有管理員看得到
+    match /logins/{docId} {
+      allow read, create: if isAdmin();
+    }
+  }
+}

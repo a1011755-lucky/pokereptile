@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爬可夢 爬寵水族道館 ‧ 官方網站首頁</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts & Phosphor Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#dc2626',
+              darkred: '#b91c1c',
+              dark: '#18181b',
+              surface: '#fbf8fc',
+              emerald: '#059669',
+              green: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 5rem; }
+
+    /* ===== 動態效果 ===== */
+    #view-home .reveal { opacity: 0; transform: translateY(32px) scale(.97); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1.2); }
+    #view-home .reveal.lift { transition: opacity .7s ease, transform .5s cubic-bezier(.2,.8,.2,1.3), box-shadow .3s ease; }
+    #view-home .reveal.in { opacity: 1; transform: none; }
+    #view-home .lift:hover { transform: translateY(-6px) rotate(-.3deg); box-shadow: 0 18px 40px -12px rgba(220,38,38,.28); }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .floaty { animation: floaty 5s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(8deg); } }
+    .critter { position: absolute; font-size: 2.4rem; opacity: .22; animation: bob 6s ease-in-out infinite; user-select: none; }
+    @keyframes shine { to { background-position: 200% center; } }
+    .text-shine { background: linear-gradient(90deg,#dc2626,#f97316,#e11d48,#dc2626); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 3s linear infinite; }
+    @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-12deg) scale(1.15); } 75% { transform: rotate(12deg) scale(1.15); } }
+    .group:hover .wiggle-i, .wiggle-i:hover { animation: wiggle .6s ease; }
+    @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(220,38,38,.55); } 100% { box-shadow: 0 0 0 16px rgba(220,38,38,0); } }
+    .pulse-ring { animation: ring 1.8s ease-out infinite; }
+    @keyframes bounceY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .bounce-y { animation: bounceY 1.6s ease-in-out infinite; }
+    @keyframes blip { 0% { color: #fff; } 100% { color: inherit; } }
+    .blip { animation: blip .8s ease; }
+    #scroll-progress { transform-origin: left; transform: scaleX(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      #view-home .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ===== 前台編輯模式 ===== */
+    body.editing #view-home [data-k] { outline: 2px dashed rgba(220,38,38,.35); outline-offset: 3px; border-radius: 4px; cursor: text; }
+    body.editing #view-home [data-k]:hover, body.editing #view-home [data-k]:focus { outline-color: #dc2626; background-color: rgba(254,226,226,.35); }
+    body.editing #view-home img[data-k] { cursor: pointer; }
+    body.editing #view-home img[data-k]:hover { filter: brightness(.75); }
+    body.editing #view-home .reveal { opacity: 1 !important; transform: none !important; }
+    body.editing #view-home { padding-bottom: 96px; }
+    body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; }
+    .hud-glow { box-shadow: 0 0 25px rgba(220, 38, 38, 0.15); }
+  </style>
+</head>
+<body class="bg-[#fbf8fc] text-slate-800 antialiased selection:bg-red-500 selection:text-white">
+<!-- ===================== VIEW: 官網前台 ===================== -->
+<div id="view-home">
+<!-- Top Announcement Bar -->
+<aside aria-label="公告通知" class="bg-gradient-to-r from-brand-dark via-zinc-900 to-brand-dark text-white text-xs sm:text-sm py-2 px-4 border-b border-zinc-800">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-2 truncate">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-brand-red text-white uppercase tracking-wider animate-pulse">即時特報</span>
+<span class="text-zinc-300 truncate" data-bind="bar">2026 春季特寵爬聚交流會早鳥預約中！館內活體均完成 14 日高規格檢疫與履歷建檔。</span>
+</div>
+<div class="hidden md:flex items-center space-x-6 text-zinc-400 text-xs shrink-0">
+<span class="flex items-center gap-1.5"><i class="ph ph-shield-check text-emerald-400 text-sm"></i> 生態環境智能監控運作中 (28.5°C)</span>
+<a class="hover:text-white transition flex items-center gap-1" href="#login"><i class="ph ph-lock-key"></i> 道館後台登入</a>
+</div>
+</div>
+</aside>
+<!-- Global Header Navigation -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-zinc-200/80 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3 group" href="index.html">
+<div class="w-12 h-12 rounded-full overflow-hidden shadow-md border-2 border-brand-red group-hover:scale-105 transition-transform flex items-center justify-center bg-zinc-900">
+<img alt="爬可夢道館" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&amp;fit=crop&amp;w=160&amp;q=80"/>
+</div>
+<div>
+<span class="text-2xl font-black tracking-tight text-zinc-900 flex items-center gap-1">
+            爬可夢 <span class="text-brand-red text-xs font-bold uppercase tracking-widest px-2 py-0.5 bg-red-50 rounded-full border border-red-200">道館</span>
+</span>
+<span class="block text-[11px] text-zinc-500 font-medium tracking-wide">POKÉREPTILE HERPETOLOGY &amp; AQUARIUM GYM</span>
+</div>
+</a>
+<!-- Desktop Nav Menu -->
+<nav class="hidden lg:flex items-center space-x-1">
+<a class="px-3.5 py-2 text-sm font-bold text-brand-red rounded-lg bg-red-50" href="#hero">道館首頁</a>
+<a class="px-3.5 py-2 text-sm font-medium text-zinc-600 hover:text-brand-red hover:bg-zinc-100 rounded-lg transition" href="#announcements">最新公告</a>
+<a class="px-3.5 py-2 text-sm font-medium text-zinc-600 hover:text-brand-red hover:bg-zinc-100 rounded-lg transition" href="#services">三大核心主軸</a>
+<a class="px-3.5 py-2 text-sm font-medium text-zinc-600 hover:text-brand-red hover:bg-zinc-100 rounded-lg transition" href="#systems">四大智能系統</a>
+<a class="px-3.5 py-2 text-sm font-medium text-zinc-600 hover:text-brand-red hover:bg-zinc-100 rounded-lg transition" href="#moments">玩家交流花絮</a>
+<a class="px-3.5 py-2 text-sm font-medium text-zinc-600 hover:text-brand-red hover:bg-zinc-100 rounded-lg transition" href="#contact">展館與據點</a>
+</nav>
+<!-- CTA Buttons -->
+<div class="flex items-center space-x-3">
+<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-[#06c755] text-white hover:bg-[#05b34c] shadow-sm transition" href="https://line.me" rel="noopener noreferrer" target="_blank">
+<i class="ph ph-chat-circle-dots text-base"></i>
+<span>官方 LINE 諮詢</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-brand-red text-white hover:bg-brand-darkred shadow-sm transition" href="#login">
+<i class="ph ph-user text-base"></i>
+<span>管理員登入</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative pt-12 pb-20 lg:pt-16 lg:pb-28 overflow-hidden bg-gradient-to-b from-white via-red-50/20 to-[#fbf8fc]" id="hero">
+<!-- 漂浮裝飾 -->
+<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden" data-noedit="">
+<span class="critter" style="top:8%;left:4%;">🦎</span>
+<span class="critter" style="top:72%;left:7%;animation-delay:-2s;">🐢</span>
+<span class="critter" style="top:12%;left:50%;animation-delay:-4s;font-size:1.8rem;">🌿</span>
+<span class="critter" style="top:84%;left:45%;animation-delay:-1s;">🐍</span>
+<span class="critter" style="top:5%;right:5%;animation-delay:-3s;font-size:1.9rem;">🐠</span>
+<span class="critter" style="top:90%;right:9%;animation-delay:-5s;font-size:1.6rem;">💧</span>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Content -->
+<div class="lg:col-span-7 space-y-6">
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100/70 border border-red-200 text-brand-red text-xs font-bold tracking-wide">
+<span class="w-2 h-2 rounded-full bg-brand-red animate-ping"></span>
+            專業特寵培育 ‧ 水陸生態造景 ‧ 玩家交流重鎮
+          </div>
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-zinc-900 tracking-tight leading-tight">
+            熱血出發 ‧ <br/>
+            開拓你的<span class="text-brand-red text-shine underline decoration-red-200 underline-offset-8">爬寵水族</span>新境界
+          </h1>
+<p class="text-base sm:text-lg text-zinc-600 max-w-xl leading-relaxed">
+            每一隻爬寵都是專屬的冒險夥伴！可夢道館深耕特寵與水族生態，從幼體健康檢測、飼育溫濕度與器材調校、物理圖鑑基因科普，到頂級活體交流；搭配道館智能環境即時監控系統，讓新手與資深玩家全程安心。
+          </p>
+<div class="flex flex-wrap gap-3 text-xs font-semibold text-zinc-700 pt-2">
+<span class="px-3 py-1.5 bg-white border border-zinc-200 rounded-lg shadow-sm flex items-center gap-1.5"><i class="ph ph-shield-check text-brand-red text-sm"></i> 初審健康檢疫合格 ‧ 體質把關</span>
+<span class="px-3 py-1.5 bg-white border border-zinc-200 rounded-lg shadow-sm flex items-center gap-1.5"><i class="ph ph-dna text-brand-red text-sm"></i> 高品質基因爬系飼育諮詢</span>
+<span class="px-3 py-1.5 bg-white border border-zinc-200 rounded-lg shadow-sm flex items-center gap-1.5"><i class="ph ph-heartbeat text-brand-red text-sm"></i> 這樣安心專業寄養專案</span>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+<a class="pulse-ring inline-flex justify-center items-center gap-2 px-7 py-3.5 rounded-xl font-bold bg-brand-red hover:bg-brand-darkred text-white shadow-lg shadow-red-500/25 transition" href="https://line.me" rel="noopener noreferrer" target="_blank">
+<i class="ph ph-chat-circle-text text-xl"></i>
+<span>加入官方 LINE 即時預約看寵 / 諮詢</span>
+</a>
+<a class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl font-bold bg-white hover:bg-zinc-50 border border-zinc-300 text-zinc-800 transition shadow-sm" href="#services">
+<span>了解核心服務</span>
+<i class="ph ph-arrow-right"></i>
+</a>
+</div>
+<div class="flex items-center gap-2 text-xs text-zinc-500 pt-2">
+<i class="ph ph-map-pin text-brand-red text-base"></i>
+<span>道館展示據點（預約制現場交流與活體展售，附設專屬停車位與活體檢疫展示廳）</span>
+</div>
+</div>
+<!-- Right Visual: Smart Gym Live HUD Monitor -->
+<div class="lg:col-span-5">
+<div class="bg-zinc-950 text-white rounded-3xl p-6 shadow-2xl border border-zinc-800 relative hud-glow floaty">
+<!-- Header bar of HUD -->
+<div class="flex items-center justify-between border-b border-zinc-800 pb-4 mb-5">
+<div class="flex items-center gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+<div>
+<h3 class="text-sm font-bold tracking-wider text-zinc-100 uppercase">爬可夢 智能道館系統</h3>
+<p class="text-[10px] text-zinc-400">PLAYER: 守宮、小寵、守宮生態繁殖倉</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-zinc-800 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono rounded font-bold">LIVE HUD</span>
+</div>
+<!-- Temperature & Humidity Gauges -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="bg-zinc-900/90 rounded-2xl p-4 border border-zinc-800/80">
+<div class="text-[11px] text-zinc-400 flex items-center justify-between">
+<span>熱區溫度 (HEAT SPOT)</span>
+<i class="ph ph-thermometer-hot text-amber-400"></i>
+</div>
+<div class="text-3xl font-black text-amber-400 mt-2 font-mono" data-live="temp">28.5<span class="text-base font-normal">°C</span></div>
+<p class="text-[10px] text-zinc-500 mt-1">智能加熱溫控正常</p>
+</div>
+<div class="bg-zinc-900/90 rounded-2xl p-4 border border-zinc-800/80">
+<div class="text-[11px] text-zinc-400 flex items-center justify-between">
+<span>環境濕度 (HUMIDITY)</span>
+<i class="ph ph-drop text-cyan-400"></i>
+</div>
+<div class="text-3xl font-black text-cyan-400 mt-2 font-mono" data-live="hum">65<span class="text-base font-normal">%</span></div>
+<p class="text-[10px] text-zinc-500 mt-1">自動微霧保濕開啟</p>
+</div>
+</div>
+<!-- Active Feeding / Status Log -->
+<div class="bg-zinc-900/60 rounded-xl p-3 border border-zinc-800 text-xs space-y-2 mb-4">
+<div class="flex items-center justify-between text-[11px]">
+<span class="text-zinc-400 flex items-center gap-1.5"><i class="ph ph-bowl-food text-brand-red"></i> 今日進食與排便檢驗巡查</span>
+<span class="text-zinc-400 font-mono text-[10px]">14:20</span>
+</div>
+<p class="text-zinc-200 text-xs leading-relaxed">已投餵經裹合維生素D3鈣粉之蟋蟀x3，並補足乾淨過濾水，活動力極佳。</p>
+</div>
+<!-- Stats Bar -->
+<div class="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-800 text-center">
+<div>
+<div class="text-xs text-zinc-400">活力指數</div>
+<div class="text-sm font-bold text-emerald-400 mt-0.5">98 分 ★★★</div>
+</div>
+<div>
+<div class="text-xs text-zinc-400">脫皮狀態</div>
+<div class="text-sm font-bold text-zinc-200 mt-0.5">完滿完成</div>
+</div>
+<div>
+<div class="text-xs text-zinc-400">食慾指標</div>
+<div class="text-sm font-bold text-amber-400 mt-0.5">優良 (狂食)</div>
+</div>
+</div>
+<!-- Bottom Counter summary -->
+<div class="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-around text-center text-xs">
+<div><span class="font-black text-base text-white">300+</span><span class="block text-[10px] text-zinc-500">培育品系圖鑑</span></div>
+<div class="w-px h-6 bg-zinc-800"></div>
+<div><span class="font-black text-base text-white">24H</span><span class="block text-[10px] text-zinc-500">恆溫守護監控</span></div>
+<div class="w-px h-6 bg-zinc-800"></div>
+<div><span class="font-black text-base text-white">1 對 1</span><span class="block text-[10px] text-zinc-500">專屬飼育輔導</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest Announcements Section -->
+<section class="py-16 bg-white border-y border-zinc-200/80" id="announcements">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+<div>
+<span class="text-xs font-extrabold uppercase tracking-widest text-brand-red">ANNOUNCEMENTS</span>
+<h2 class="text-3xl font-black text-zinc-900 mt-1">最新道館公告與特展資訊</h2>
+<p class="text-sm text-zinc-500 mt-2">新進活體個體抵台、球蟒/豹紋守宮/鬆獅蜥發育發表會、飼育課程與假期寄宿開放預約。</p>
+</div>
+<a class="mt-4 md:mt-0 text-xs font-bold text-brand-red hover:underline inline-flex items-center gap-1" href="https://line.me" rel="noopener noreferrer" target="_blank">
+          加入 LINE 第一時間收到公告 <i class="ph ph-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Big Card -->
+<div class="lg:col-span-7 bg-zinc-950 text-white rounded-2xl overflow-hidden shadow-lg border border-zinc-800 flex flex-col justify-between p-6 sm:p-8 relative">
+<div>
+<div class="flex items-center justify-between text-xs mb-4">
+<span class="px-2.5 py-1 rounded bg-brand-red font-bold text-white uppercase tracking-wider text-[11px]">盛大特展</span>
+<span class="text-zinc-400 font-mono">2026.04.18 - 04.20</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3">2026 春季特寵爬聚交流會 暨 珍稀品系選拔熱烈報名中</h3>
+<p class="text-zinc-300 text-sm leading-relaxed mb-6">
+              年度最大特寵訓練家集會！本屆特別設立雪花白化變異雪花豹紋守宮、球蟒極限變異走秀台與熱帶雨林沉木造景實戰講堂。現場提供專業獸醫義診諮詢與晶片掃描登記服務。
+            </p>
+<div class="relative rounded-xl overflow-hidden mb-6 h-56 bg-zinc-900 border border-zinc-800">
+<img alt="交流會現場" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+<span class="text-xs text-white font-medium flex items-center gap-1"><i class="ph ph-play-circle text-brand-red text-lg"></i> 複審認證品系特展宣傳片</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-zinc-800 text-xs">
+<span class="text-zinc-400">名額有限，報名即贈爬寵草本營養試飲禮盒組</span>
+<a class="px-4 py-2 bg-brand-red hover:bg-brand-darkred text-white font-bold rounded-lg transition inline-flex items-center gap-1 shrink-0" href="https://line.me" rel="noopener noreferrer" target="_blank">線上報名 / 領取號碼牌 <i class="ph ph-arrow-up-right"></i></a>
+</div>
+</div>
+<!-- Small Cards -->
+<div class="lg:col-span-5 space-y-4">
+<!-- 公告卡片由後台「公告管理」產生 -->
+<div class="space-y-4" id="ann-list"></div>
+<!-- Quick Help Box -->
+<div class="bg-gradient-to-r from-brand-red to-rose-600 text-white p-5 rounded-2xl shadow-md flex items-center justify-between">
+<div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-rose-200">GYM HOTLINE</span>
+<h4 class="text-base font-bold">想第一時間獲取稀有品系？</h4>
+<p class="text-xs text-rose-100 mt-0.5">加入道館群組，搶先解鎖限定個體</p>
+</div>
+<a aria-label="加入 LINE 群組" class="w-10 h-10 rounded-full bg-white text-brand-red flex items-center justify-center font-bold text-lg hover:scale-105 transition shrink-0" href="https://line.me" rel="noopener noreferrer" target="_blank">
+<i class="ph ph-chat-centered-dots"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Three Pillars Section -->
+<section class="py-20 bg-[#fbf8fc]" id="services">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-2xl mx-auto mb-14">
+<span class="text-xs font-extrabold uppercase tracking-widest text-brand-red px-3 py-1 bg-red-100/60 rounded-full border border-red-200">CORE PILLARS</span>
+<h2 class="text-3xl sm:text-4xl font-black text-zinc-900 mt-3">三大主軸，打造最安心的特寵飼育體驗</h2>
+<p class="text-sm sm:text-base text-zinc-600 mt-2">我們不只是活體空間，更是專業的爬寵與水族生命教育中心，為每一隻生命提供全方位守護。</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left details -->
+<div class="lg:col-span-7 bg-white p-8 rounded-3xl border border-zinc-200/80 shadow-sm space-y-6">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-red-50 text-brand-red flex items-center justify-center text-2xl font-bold shrink-0">
+<i class="ph ph-shield-check"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-zinc-900">嚴苛把關，每一隻都是健康活潑的夥伴</h3>
+<p class="text-xs text-zinc-500">拒絕劣質繁殖與脆弱幼體，每隻個體附專屬磁卡溯源紀錄</p>
+</div>
+</div>
+<div class="space-y-4 pt-2">
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">01</span>
+<div>
+<h4 class="text-sm font-bold text-zinc-900">嚴格個體健康檢查與驅蟲反應程序</h4>
+<p class="text-xs text-zinc-600 mt-0.5">入館後至少 14 天單獨隔離觀察期，確認無原蟲感染後方可交流。</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">02</span>
+<div>
+<h4 class="text-sm font-bold text-zinc-900">專屬活體飼育履歷與基因血統保證書</h4>
+<p class="text-xs text-zinc-600 mt-0.5">記錄親代基因品系、出殼日期、每次脫皮與進食數據，保證血統純正透明。</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">03</span>
+<div>
+<h4 class="text-sm font-bold text-zinc-900">新手入門 1 對 1 飼育箱溫濕度及光源配置指導</h4>
+<p class="text-xs text-zinc-600 mt-0.5">根據個別環境量身規劃 UVB 燈型、加熱墊及底材/鈣砂搭配，不走彎路。</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="w-6 h-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">04</span>
+<div>
+<h4 class="text-sm font-bold text-zinc-900">終身飼育疑難排解、疾病衛教與脫皮協助</h4>
+<p class="text-xs text-zinc-600 mt-0.5">遇到卡皮、拒食或溫度突發問題隨時聯繫道館，專任特寵輔導員線上陪伴。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Routine Timetable -->
+<div class="lg:col-span-5 bg-zinc-900 text-white p-7 rounded-3xl border border-zinc-800 shadow-xl space-y-6">
+<div class="flex items-center justify-between border-b border-zinc-800 pb-4">
+<div>
+<span class="text-[10px] font-mono text-brand-red font-bold uppercase tracking-wider">ROUTINE TIMETABLE</span>
+<h3 class="text-lg font-bold text-zinc-100">道館活體照料標準時程</h3>
+</div>
+<i class="ph ph-clock text-2xl text-zinc-400"></i>
+</div>
+<div class="space-y-4 text-xs">
+<div class="flex items-start gap-3">
+<div class="w-16 font-mono text-brand-red font-bold shrink-0">09:00 AM</div>
+<div>
+<div class="font-bold text-zinc-200">溫濕度與生命跡象全館核查</div>
+<div class="text-zinc-400 text-[11px] mt-0.5">檢查溫控器校準、清理夜間排泄物、補充乾淨過濾軟水。</div>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-16 font-mono text-emerald-400 font-bold shrink-0">11:00 AM</div>
+<div>
+<div class="font-bold text-zinc-200">精準餵食與自動微霧噴霧</div>
+<div class="text-zinc-400 text-[11px] mt-0.5">雨林飼育區模擬晨間降水，點算天然活餌生物並裹勻鈣粉。</div>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-16 font-mono text-amber-400 font-bold shrink-0">02:00 PM</div>
+<div>
+<div class="font-bold text-zinc-200">活體體重秤重與健康狀態數位日誌</div>
+<div class="text-zinc-400 text-[11px] mt-0.5">量測記錄生長曲線、檢查爪部與眼眶脫皮狀態，確保無殘留皮屑。</div>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-16 font-mono text-cyan-400 font-bold shrink-0">06:00 PM</div>
+<div>
+<div class="font-bold text-zinc-200">晚間溫控降溫與夜光環境調節</div>
+<div class="text-zinc-400 text-[11px] mt-0.5">模擬大自然晝夜溫差（降溫 2~3°C），啟動夜行性守宮適配柔光。</div>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t border-zinc-800 text-center">
+<span class="inline-flex items-center gap-1 text-[11px] text-zinc-400"><i class="ph ph-shield-check text-emerald-400"></i> 道館日常恆溫巡監認證合格</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Four Smart Systems Section -->
+<section class="py-20 bg-white border-y border-zinc-200/80" id="systems">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-xs font-extrabold uppercase tracking-widest text-brand-red">SMART GYM SYSTEMS</span>
+<h2 class="text-3xl sm:text-4xl font-black text-zinc-900 mt-2">爬寵玩家最在意的四大智能系統</h2>
+<p class="text-sm sm:text-base text-zinc-600 mt-2">揮別傳統飼養盲區，爬可夢將聯網、數位健康日誌與血統資料庫全面串連，給予每位訓練家最強後盾。</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- System 1 -->
+<div class="bg-[#fbf8fc] p-6 rounded-2xl border border-zinc-200 hover:shadow-lg transition group">
+<div class="w-12 h-12 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+<i class="ph ph-device-mobile"></i>
+</div>
+<span class="text-[10px] font-mono text-zinc-400 font-bold">SYSTEM 01</span>
+<h3 class="text-base font-bold text-zinc-900 mt-1 mb-2">活體個體履歷 ‧ 出生與檢疫即時查閱</h3>
+<p class="text-xs text-zinc-600 leading-relaxed">手機掃描專屬 QR 碼或晶片編號，即可檢閱帶契約親代父母品系、破殼出產日、歷代生長週期圖表與檢疫報告書。</p>
+<div class="mt-4 pt-3 border-t border-zinc-200 text-[11px] font-bold text-brand-red flex items-center gap-1">
+<span>血統數據 100% 透明</span> <i class="ph ph-arrow-right"></i>
+</div>
+</div>
+<!-- System 2 -->
+<div class="bg-[#fbf8fc] p-6 rounded-2xl border border-zinc-200 hover:shadow-lg transition group">
+<div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+<i class="ph ph-calendar-check"></i>
+</div>
+<span class="text-[10px] font-mono text-zinc-400 font-bold">SYSTEM 02</span>
+<h3 class="text-base font-bold text-zinc-900 mt-1 mb-2">數位飼育日誌 ‧ 餵食與營養週期排程</h3>
+<p class="text-xs text-zinc-600 leading-relaxed">智慧記錄蟋蟀/乳鼠/專用凝膠飼料攝取，主動推播提示每週 D3 鈣粉與綜合維生素添加週期，告別漏餵或軟骨病。</p>
+<div class="mt-4 pt-3 border-t border-zinc-200 text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+<span>定時營養推播提醒</span> <i class="ph ph-arrow-right"></i>
+</div>
+</div>
+<!-- System 3 -->
+<div class="bg-[#fbf8fc] p-6 rounded-2xl border border-zinc-200 hover:shadow-lg transition group">
+<div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+<i class="ph ph-warning"></i>
+</div>
+<span class="text-[10px] font-mono text-zinc-400 font-bold">SYSTEM 03</span>
+<h3 class="text-base font-bold text-zinc-900 mt-1 mb-2">溫濕度與 UVB 弱點即時手機預警</h3>
+<p class="text-xs text-zinc-600 leading-relaxed">整合高靈敏物聯網感測模組，當箱內低於 24°C 或熱點超過 34°C 時自動傳送 LINE 警報，隨時保護爬寶生命安全。</p>
+<div class="mt-4 pt-3 border-t border-zinc-200 text-[11px] font-bold text-amber-600 flex items-center gap-1">
+<span>24H 零時差異常警訊</span> <i class="ph ph-arrow-right"></i>
+</div>
+</div>
+<!-- System 4 -->
+<div class="bg-[#fbf8fc] p-6 rounded-2xl border border-zinc-200 hover:shadow-lg transition group">
+<div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+<i class="ph ph-shield-star"></i>
+</div>
+<span class="text-[10px] font-mono text-zinc-400 font-bold">SYSTEM 04</span>
+<h3 class="text-base font-bold text-zinc-900 mt-1 mb-2">透明化器材選購 ‧ 7 天活體健康保證</h3>
+<p class="text-xs text-zinc-600 leading-relaxed">線上同步核發電子防偽認證書，道館售出之活體享專屬 7 天生命情況保障，期間由特寵導師全程追蹤開食狀態。</p>
+<div class="mt-4 pt-3 border-t border-zinc-200 text-[11px] font-bold text-rose-600 flex items-center gap-1">
+<span>合約級保障條款</span> <i class="ph ph-arrow-right"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Community & Photo Gallery Highlights -->
+<section class="py-20 bg-[#fbf8fc]" id="moments">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-2xl mx-auto mb-14">
+<span class="text-xs font-extrabold uppercase tracking-widest text-brand-red">COMMUNITY &amp; MOMENTS</span>
+<h2 class="text-3xl sm:text-4xl font-black text-zinc-900 mt-2">精彩館內花絮與玩家交流現場</h2>
+<p class="text-sm text-zinc-600 mt-2">在道館裡，每一位初學者都能親手感受鱗片與皮膚的溫度，與同好交流造景工藝與繁殖心得。</p>
+</div>
+<!-- 相簿照片由後台「相簿管理」產生 -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-list"></div>
+</div>
+</section>
+<!-- Contact & Location Section -->
+<section class="py-20 bg-white border-t border-zinc-200" id="contact">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-gradient-to-br from-zinc-900 to-zinc-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-zinc-800">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+<!-- Left Info -->
+<div class="lg:col-span-7 space-y-6">
+<span class="text-xs font-mono font-bold text-brand-red uppercase tracking-wider">GET IN TOUCH</span>
+<h2 class="text-3xl sm:text-4xl font-black text-white">直接聯繫爬可夢官方 LINE 與展館據點</h2>
+<p class="text-zinc-300 text-sm leading-relaxed">
+              預約賞寵、寄養諮詢、客製化造景缸訂製、水質硬體檢測與周邊器材選購，歡迎透過官方 LINE 或直接蒞臨展示館。
+            </p>
+<div class="space-y-3 pt-2 text-xs">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-zinc-800/60 border border-zinc-700/60">
+<i class="ph ph-phone-call text-xl text-brand-red"></i>
+<div>
+<div class="text-zinc-400">諮詢與預約專線</div>
+<div class="font-bold text-sm text-white font-mono"><span data-bind="phone">(02) 2888-8888</span> <span class="text-xs font-normal text-zinc-400">（服務時段專人接聽）</span></div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-zinc-800/60 border border-zinc-700/60">
+<i class="ph ph-clock text-xl text-brand-red"></i>
+<div>
+<div class="text-zinc-400">道館營業與門市時段</div>
+<div class="font-bold text-sm text-white"><span data-bind="hours">週二至週日 13:00 - 21:30</span> <span class="text-xs font-normal text-zinc-400">（每週一為生態檢疫公休日）</span></div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-zinc-800/60 border border-zinc-700/60">
+<i class="ph ph-map-pin text-xl text-brand-red"></i>
+<div>
+<div class="text-zinc-400">台灣展館展示中心</div>
+<div class="font-bold text-sm text-white"><span data-bind="address">台北市生態特寵園區大道 88 號</span>（備有專屬客尊停車位）</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right QR Code Box -->
+<div class="lg:col-span-5 bg-white text-zinc-900 p-8 rounded-2xl text-center shadow-lg">
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#06c755] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 mb-3">
+<i class="ph ph-chat-circle"></i> 官方 LINE 一對一諮詢
+            </span>
+<h3 class="text-lg font-black text-zinc-900 mb-1">掃描 QR Code 或搜尋 ID</h3>
+<p class="text-xs text-zinc-500 mb-4">加入後傳送「我要預約賞寵」，即可領取新人門票優惠與電子手冊。</p>
+<div class="w-44 h-44 mx-auto bg-zinc-100 p-3 rounded-2xl border-2 border-dashed border-zinc-300 flex items-center justify-center">
+<!-- QR Code Mockup -->
+<img alt="LINE QR Code" data-qr="" class="w-full h-full rounded-lg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=https://line.me"/>
+</div>
+<div class="text-xs font-bold text-zinc-800 mt-3 font-mono">LINE 官方 ID：@pokereptile_tw</div>
+<a class="mt-4 block w-full py-3 bg-[#06c755] hover:bg-[#05b34c] text-white font-bold text-xs rounded-xl transition shadow" href="https://line.me" rel="noopener noreferrer" target="_blank">
+              點擊直接加入 LINE 好友
+            </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-zinc-950 text-white pt-12 pb-8 border-t border-zinc-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-zinc-800 text-xs">
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-brand-red flex items-center justify-center font-black text-white text-sm">爬</div>
+<span class="font-black text-lg tracking-wider">爬可夢道館</span>
+</div>
+<p class="text-zinc-400 leading-relaxed text-[11px]">整合高規格生態培育、智慧環境控制與專業爬寵水族探索，提供訓練師級別的飼育與造景服務體系。</p>
+</div>
+<div>
+<h4 class="font-bold text-zinc-100 mb-3 text-sm">營業資訊與門市</h4>
+<ul class="space-y-2 text-zinc-400 text-[11px]">
+<li data-bind="hours">週二至週日 13:00 - 21:30</li>
+<li>每週一為生態檢疫公休日</li>
+<li data-bind="address">台北市生態特寵園區大道 88 號</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-zinc-100 mb-3 text-sm">快速導覽</h4>
+<ul class="space-y-2 text-zinc-400 text-[11px]">
+<li><a class="hover:text-white" href="#services">三大核心主軸介紹</a></li>
+<li><a class="hover:text-white" href="#systems">四大智能系統</a></li>
+<li><a class="hover:text-white" href="#hero">溫濕度聯網智能監測</a></li>
+<li><a class="hover:text-brand-red" href="#login">道館後台登入入口</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-zinc-100 mb-3 text-sm">官方社群</h4>
+<p class="text-zinc-400 text-[11px] mb-3">掌握即時動態與爬友聚會資訊：</p>
+<div class="flex gap-2">
+<a class="px-3 py-1.5 bg-[#06c755] text-white rounded text-[11px] font-bold inline-flex items-center gap-1" href="https://line.me" rel="noopener noreferrer" target="_blank"><i class="ph ph-chat-circle"></i> LINE 官方</a>
+<a class="px-3 py-1.5 bg-blue-600 text-white rounded text-[11px] font-bold inline-flex items-center gap-1" href="https://facebook.com" rel="noopener noreferrer" target="_blank"><i class="ph ph-facebook-logo"></i> 粉專</a>
+</div>
+</div>
+</div>
+<div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500">
+<div>© 2026 爬可夢 爬寵水族道館. All rights reserved.</div>
+<div class="mt-2 sm:mt-0 font-mono">POKÉREPTILE HERPETOLOGY &amp; AQUASCAPING GYM</div>
+</div>
+</div>
+</footer>
+</div>
+<!-- ===================== VIEW: 管理員登入 ===================== -->
+<div class="hidden min-h-screen flex-col bg-[#f0f2f5]" id="view-login">
+<header class="bg-brand-red text-white py-3.5 px-6 shadow-md">
+<div class="max-w-6xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2 text-white hover:opacity-90 transition" href="#hero">
+<span class="w-3 h-3 rounded-full bg-white inline-block"></span>
+<span class="font-extrabold tracking-wider text-sm uppercase">POKÉREPTILE HERPETOLOGY GYM</span>
+</a>
+<span class="text-red-200 text-xs hidden sm:inline">|</span>
+<span class="text-xs font-medium text-red-100 hidden sm:inline">CMS 官網內容管理系統 ‧ 授權專區</span>
+</div>
+<div class="hidden sm:flex items-center space-x-4 text-xs font-mono">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span> SSL 256-BIT SECURED</span>
+<span class="bg-red-800/80 px-2 py-0.5 rounded text-[11px]">v2.4.0 節點在線</span>
+</div>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+<div class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl border border-zinc-200/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+<!-- Left: CMS Features -->
+<section class="lg:col-span-5 bg-gradient-to-br from-zinc-50 via-red-50/20 to-zinc-100 p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-zinc-200">
+<div>
+<div class="flex items-center gap-3.5 mb-6">
+<div class="w-16 h-16 rounded-full overflow-hidden shadow-lg border-2 border-brand-red bg-white flex items-center justify-center shrink-0">
+<img alt="爬可夢" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&amp;fit=crop&amp;w=200&amp;q=80"/>
+</div>
+<div>
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-brand-red bg-red-100/70 px-2.5 py-0.5 rounded-full border border-red-200"><i class="ph ph-shield-check"></i> 道館核心中樞</span>
+<h1 class="text-2xl font-black text-zinc-900 mt-1">爬可夢 爬寵水族道館</h1>
+<p class="text-xs text-zinc-500">內容與動態展訊後台 (PokéAdmin)</p>
+</div>
+</div>
+<div class="text-xs font-bold text-zinc-700 uppercase tracking-wider mb-3 flex items-center justify-between">
+<span>登入後可使用 (CMS FEATURES)</span>
+<i class="ph ph-squares-four text-zinc-400"></i>
+</div>
+<div class="space-y-3">
+<div class="bg-white p-3.5 rounded-2xl border border-zinc-200/80 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 text-lg"><i class="ph ph-megaphone-simple"></i></div>
+<div>
+<h2 class="text-xs font-bold text-zinc-800">即時公告與特展推播</h2>
+<p class="text-[11px] text-zinc-500 mt-0.5 leading-snug">新增、編輯、刪除公告，首頁「最新公告」立即同步。</p>
+</div>
+</div>
+<div class="bg-white p-3.5 rounded-2xl border border-zinc-200/80 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-xl bg-red-100 text-brand-red flex items-center justify-center shrink-0 text-lg"><i class="ph ph-gauge"></i></div>
+<div>
+<h2 class="text-xs font-bold text-zinc-800">道館總覽儀表板</h2>
+<p class="text-[11px] text-zinc-500 mt-0.5 leading-snug">即時溫濕度、公告數量與最近登入紀錄一覽。</p>
+</div>
+</div>
+<div class="bg-white p-3.5 rounded-2xl border border-zinc-200/80 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-xl bg-zinc-100 text-zinc-700 flex items-center justify-center shrink-0 text-lg"><i class="ph ph-calendar-blank"></i></div>
+<div>
+<h2 class="text-xs font-bold text-zinc-800">營業資訊與跑馬燈設定</h2>
+<p class="text-[11px] text-zinc-500 mt-0.5 leading-snug">修改頂部即時特報、營業時段、電話與地址。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-zinc-200/80 flex items-center justify-between gap-2 text-[11px] text-zinc-500 font-mono">
+<span class="flex items-center gap-1.5"><i class="ph ph-broadcast text-emerald-600"></i> 館內環境中繼監控正常 ‧ 28.5°C / 72% RH</span>
+<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">READY</span>
+</div>
+</section>
+<!-- Right: Login Form -->
+<section class="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-brand-red bg-red-50 border border-red-200 px-3 py-1 rounded-full uppercase tracking-wider">● 管理權限驗證 ‧ TRAINER ID</span>
+</div>
+<h2 class="text-3xl font-black text-zinc-900 mt-2 mb-1 tracking-tight">道館管理員登入</h2>
+<p class="text-xs text-zinc-500 mb-6 leading-relaxed">登入後即可編輯官網首頁內容、最新公告發布與營業資訊維護。</p>
+<!-- 尚未設定 Firebase 時顯示 -->
+<div class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 text-xs text-amber-900 leading-relaxed" id="fb-missing">
+<b class="flex items-center gap-1.5 mb-1"><i class="ph ph-warning text-base"></i> 網站尚未連接 Firebase</b>
+請依照 README.md 的步驟建立 Firebase 專案，並把設定貼到 firebase-config.js 後再登入。
+</div>
+<form class="space-y-4" id="login-form">
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="text-xs font-bold text-zinc-800" for="username">管理員 Email <span class="text-brand-red">*</span></label>
+<span class="text-[10px] text-zinc-400 font-mono">EMAIL</span>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-lg"><i class="ph ph-envelope-simple"></i></div>
+<input autocomplete="username" class="w-full pl-10 pr-4 py-3 bg-zinc-50 border border-zinc-300 rounded-xl text-sm font-semibold text-zinc-900 focus:bg-white focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none transition" id="username" placeholder="admin@example.com" required type="email"/>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="text-xs font-bold text-zinc-800" for="password">管理員安全密碼 <span class="text-brand-red">*</span></label>
+<span class="text-[10px] text-zinc-400 font-mono">SECRET KEY</span>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 text-lg"><i class="ph ph-key"></i></div>
+<input autocomplete="current-password" class="w-full pl-10 pr-12 py-3 bg-zinc-50 border border-zinc-300 rounded-xl text-sm font-semibold text-zinc-900 focus:bg-white focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none transition" id="password" placeholder="請輸入密碼" required type="password"/>
+<button aria-label="顯示或隱藏密碼" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-400 hover:text-zinc-600 text-lg" id="btn-eye" type="button">
+<i class="ph ph-eye-slash" id="eye-icon"></i>
+</button>
+</div>
+</div>
+<p class="hidden text-xs font-bold text-brand-red bg-red-50 border border-red-200 rounded-lg px-3 py-2" id="login-error"></p>
+<div class="flex items-center justify-between text-xs pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-brand-red focus:ring-brand-red border-zinc-300" id="remember" type="checkbox"/>
+<span class="text-zinc-600 font-medium">記住此授權裝置</span>
+</label>
+<button class="text-brand-red hover:underline font-bold" id="btn-forgot" type="button">忘記密碼？寄重設信</button>
+</div>
+<button class="w-full py-3.5 bg-brand-red hover:bg-brand-darkred disabled:opacity-60 disabled:cursor-wait text-white text-base font-black rounded-xl shadow-lg shadow-red-500/30 transition transform active:scale-[0.99] flex items-center justify-center gap-2" id="login-submit" type="submit">
+<span id="login-submit-label">立即登入管理後台 (Sign In)</span>
+<i class="ph ph-arrow-right font-bold text-lg"></i>
+</button>
+</form>
+</div>
+<div class="mt-8 pt-4 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-2">
+<a class="hover:text-brand-red flex items-center gap-1 font-bold" href="#hero"><i class="ph ph-arrow-left"></i> 返回官網前台</a>
+<div>© 2026 爬可夢 爬寵水族道館. All rights reserved.</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- ===================== VIEW: 後台管理 ===================== -->
+<div class="hidden min-h-screen bg-zinc-100" id="view-admin">
+<header class="sticky top-0 z-40 bg-zinc-950 text-white border-b border-zinc-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-brand-red flex items-center justify-center font-black text-sm shrink-0">爬</div>
+<div class="min-w-0">
+<div class="font-black text-sm tracking-wide truncate">爬可夢 CMS 管理後台</div>
+<div class="text-[10px] text-zinc-400 font-mono truncate">管理員 <span id="admin-user"></span></div>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<a class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-zinc-800 hover:bg-zinc-700 transition" href="#hero"><i class="ph ph-globe"></i><span class="hidden sm:inline">查看官網</span></a>
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-brand-red hover:bg-brand-darkred transition" id="btn-logout" type="button"><i class="ph ph-sign-out"></i><span class="hidden sm:inline">登出</span></button>
+</div>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:flex gap-6">
+<!-- Side tabs -->
+<aside class="lg:w-56 shrink-0 mb-5 lg:mb-0">
+<nav class="flex lg:flex-col gap-2 overflow-x-auto">
+<button class="admin-tab shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-left transition" data-tab="overview" type="button"><i class="ph ph-gauge text-lg"></i> 總覽</button>
+<button class="admin-tab shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-left transition" data-tab="ann" type="button"><i class="ph ph-megaphone-simple text-lg"></i> 公告管理</button>
+<button class="admin-tab shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-left transition" data-tab="gallery" type="button"><i class="ph ph-images text-lg"></i> 相簿管理</button>
+<button class="admin-tab shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-left transition" data-tab="content" type="button"><i class="ph ph-pencil-line text-lg"></i> 前台內容編輯</button>
+<button class="admin-tab shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-left transition" data-tab="settings" type="button"><i class="ph ph-gear-six text-lg"></i> 網站設定</button>
+</nav>
+</aside>
+<main class="flex-1 min-w-0">
+<!-- Panel: 總覽 -->
+<section class="space-y-6" data-panel="overview">
+<div>
+<h2 class="text-2xl font-black text-zinc-900">道館總覽</h2>
+<p class="text-xs text-zinc-500 mt-1">歡迎回來！以下是官網與館內環境的即時狀態。</p>
+</div>
+<div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+<div class="bg-white rounded-2xl p-5 border border-zinc-200">
+<div class="text-[11px] text-zinc-500 flex items-center justify-between">上架公告 <i class="ph ph-megaphone-simple text-brand-red"></i></div>
+<div class="text-3xl font-black text-zinc-900 mt-2" id="stat-ann">0</div>
+<div class="text-[10px] text-zinc-400 mt-1">則顯示於首頁</div>
+</div>
+<div class="bg-white rounded-2xl p-5 border border-zinc-200">
+<div class="text-[11px] text-zinc-500 flex items-center justify-between">相簿照片 <i class="ph ph-images text-emerald-600"></i></div>
+<div class="text-3xl font-black text-zinc-900 mt-2" id="stat-gallery">0</div>
+<div class="text-[10px] text-zinc-400 mt-1">張顯示於首頁花絮</div>
+</div>
+<div class="bg-zinc-950 text-white rounded-2xl p-5 border border-zinc-800">
+<div class="text-[11px] text-zinc-400 flex items-center justify-between">熱區溫度 <i class="ph ph-thermometer-hot text-amber-400"></i></div>
+<div class="text-3xl font-black text-amber-400 mt-2 font-mono"><span id="stat-temp">28.5</span><span class="text-base font-normal">°C</span></div>
+<div class="text-[10px] text-zinc-500 mt-1">模擬即時數據</div>
+</div>
+<div class="bg-zinc-950 text-white rounded-2xl p-5 border border-zinc-800">
+<div class="text-[11px] text-zinc-400 flex items-center justify-between">環境濕度 <i class="ph ph-drop text-cyan-400"></i></div>
+<div class="text-3xl font-black text-cyan-400 mt-2 font-mono"><span id="stat-hum">65</span><span class="text-base font-normal">%</span></div>
+<div class="text-[10px] text-zinc-500 mt-1">模擬即時數據</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-white rounded-2xl p-6 border border-zinc-200">
+<h3 class="text-sm font-bold text-zinc-900 mb-4 flex items-center gap-2"><i class="ph ph-clock-counter-clockwise text-brand-red"></i> 最近登入紀錄 <span class="text-[11px] font-normal text-zinc-400">（累計 <span id="stat-logins">0</span> 次）</span></h3>
+<ul class="space-y-2 text-xs" id="login-log"></ul>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-zinc-200">
+<h3 class="text-sm font-bold text-zinc-900 mb-4 flex items-center gap-2"><i class="ph ph-lightning text-brand-red"></i> 快速操作</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="p-4 rounded-xl bg-red-50 border border-red-200 text-left hover:bg-red-100 transition" data-goto="ann" type="button">
+<i class="ph ph-plus-circle text-xl text-brand-red"></i>
+<div class="text-sm font-bold text-zinc-900 mt-1">發布新公告</div>
+<div class="text-[11px] text-zinc-500">新增至首頁最新公告</div>
+</button>
+<button class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-left hover:bg-emerald-100 transition" data-goto="gallery" type="button">
+<i class="ph ph-image text-xl text-emerald-600"></i>
+<div class="text-sm font-bold text-zinc-900 mt-1">新增相簿照片</div>
+<div class="text-[11px] text-zinc-500">上傳到首頁花絮相簿</div>
+</button>
+<button class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-left hover:bg-amber-100 transition" data-edit-mode="" type="button">
+<i class="ph ph-cursor-text text-xl text-amber-600"></i>
+<div class="text-sm font-bold text-zinc-900 mt-1">前台即時編輯</div>
+<div class="text-[11px] text-zinc-500">直接點首頁文字、圖片修改</div>
+</button>
+<button class="p-4 rounded-xl bg-zinc-50 border border-zinc-200 text-left hover:bg-zinc-100 transition" data-goto="settings" type="button">
+<i class="ph ph-pencil-simple text-xl text-zinc-700"></i>
+<div class="text-sm font-bold text-zinc-900 mt-1">修改營業資訊</div>
+<div class="text-[11px] text-zinc-500">電話、時段、地址、特報</div>
+</button>
+</div>
+<p class="text-[11px] text-zinc-400 mt-4">最後更新：<span id="stat-updated">—</span></p>
+</div>
+</div>
+</section>
+<!-- Panel: 公告管理 -->
+<section class="hidden space-y-6" data-panel="ann">
+<div>
+<h2 class="text-2xl font-black text-zinc-900">公告管理</h2>
+<p class="text-xs text-zinc-500 mt-1">儲存後首頁「最新道館公告」區塊會立即更新（依日期由新到舊，最多顯示 4 則）。</p>
+</div>
+<form class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-4" id="ann-form">
+<input id="ann-id" type="hidden"/>
+<div class="flex items-center justify-between">
+<h3 class="text-sm font-bold text-zinc-900" id="ann-form-title">新增公告</h3>
+<button class="hidden text-xs font-bold text-zinc-500 hover:text-zinc-800" id="ann-cancel" type="button">取消編輯</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">分類標籤</span>
+<select class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="ann-tag"></select>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">公告日期</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="ann-date" required type="date"/>
+</label>
+</div>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">標題</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="ann-title" maxlength="60" placeholder="例如：五月新進球蟒品系到館" required type="text"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">內容</span>
+<textarea class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="ann-body" maxlength="200" placeholder="公告內文（200 字以內）" required rows="3"></textarea>
+</label>
+<label class="flex items-center gap-2 text-xs text-zinc-600 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-brand-red focus:ring-brand-red border-zinc-300" id="ann-line" type="checkbox"/>
+顯示「LINE 諮詢」連結
+</label>
+<button class="px-5 py-2.5 bg-brand-red hover:bg-brand-darkred text-white text-sm font-bold rounded-xl transition inline-flex items-center gap-1.5" id="ann-submit" type="submit"><i class="ph ph-floppy-disk"></i> 發布公告</button>
+</form>
+<div class="bg-white rounded-2xl border border-zinc-200 divide-y divide-zinc-100" id="ann-table"></div>
+</section>
+<!-- Panel: 相簿管理 -->
+<section class="hidden space-y-6" data-panel="gallery">
+<div>
+<h2 class="text-2xl font-black text-zinc-900">相簿管理</h2>
+<p class="text-xs text-zinc-500 mt-1">照片會顯示在首頁「精彩館內花絮」區塊，訪客點照片可放大觀看。可用 ↑↓ 調整順序。</p>
+</div>
+<form class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-4" id="gal-form">
+<input id="gal-id" type="hidden"/>
+<div class="flex items-center justify-between">
+<h3 class="text-sm font-bold text-zinc-900" id="gal-form-title">新增相簿照片</h3>
+<button class="hidden text-xs font-bold text-zinc-500 hover:text-zinc-800" id="gal-cancel" type="button">取消編輯</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-4">
+<div class="relative h-36 rounded-xl bg-zinc-100 border border-dashed border-zinc-300 overflow-hidden flex items-center justify-center text-zinc-400">
+<div class="text-center text-[11px]"><i class="ph ph-image text-3xl block"></i>照片預覽</div>
+<img alt="照片預覽" class="hidden absolute inset-0 w-full h-full object-cover" id="gal-preview"/>
+</div>
+<div class="space-y-3">
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">從電腦 / 手機上傳照片</span>
+<input accept="image/*" class="mt-1 block w-full text-xs text-zinc-600 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-brand-red file:text-white file:font-bold hover:file:bg-brand-darkred" id="gal-file" type="file"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">或貼上圖片網址</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-url" placeholder="https://..." type="url"/>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<label class="block sm:col-span-2">
+<span class="text-xs font-bold text-zinc-700">標題</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-title" maxlength="40" placeholder="例如：週末爬友聚會大合照" required type="text"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">標籤顏色</span>
+<select class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-color"></select>
+</label>
+</div>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">標籤文字</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-tag" maxlength="12" placeholder="例如：訓練家交流" required type="text"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">說明</span>
+<textarea class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-desc" maxlength="120" placeholder="照片說明（120 字以內）" rows="2"></textarea>
+</label>
+<button class="px-5 py-2.5 bg-brand-red hover:bg-brand-darkred text-white text-sm font-bold rounded-xl transition inline-flex items-center gap-1.5" id="gal-submit" type="submit"><i class="ph ph-plus"></i> 新增到相簿</button>
+</form>
+<div class="bg-white rounded-2xl border border-zinc-200 divide-y divide-zinc-100" id="gal-table"></div>
+</section>
+<!-- Panel: 前台內容編輯 -->
+<section class="hidden space-y-6" data-panel="content">
+<div>
+<h2 class="text-2xl font-black text-zinc-900">前台內容編輯</h2>
+<p class="text-xs text-zinc-500 mt-1">首頁上幾乎所有文字與圖片都能直接在畫面上修改，所見即所得。</p>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-5">
+<ol class="space-y-3 text-sm text-zinc-700">
+<li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-brand-red text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>按下方「進入前台編輯模式」，會切換到官網首頁。</li>
+<li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-brand-red text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>可編輯的地方會出現<span class="px-1 outline-dashed outline-2 outline-red-300 rounded">紅色虛線框</span>：點文字直接打字修改，點圖片可上傳新照片。</li>
+<li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-brand-red text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>修改會自動儲存，完成後按底部「完成編輯，回後台」。</li>
+</ol>
+<button class="px-5 py-3 bg-brand-red hover:bg-brand-darkred text-white text-sm font-bold rounded-xl transition inline-flex items-center gap-2" data-edit-mode="" type="button"><i class="ph ph-cursor-text text-lg"></i> 進入前台編輯模式</button>
+<div class="pt-4 border-t border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<p class="text-xs text-zinc-500">目前已修改 <b class="text-zinc-900" id="stat-edits">0</b> 處文字、<b class="text-zinc-900" id="stat-imgs">0</b> 張圖片</p>
+<button class="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-bold rounded-xl transition inline-flex items-center gap-1.5" id="btn-reset-content" type="button"><i class="ph ph-arrow-counter-clockwise"></i> 還原首頁所有文字與圖片</button>
+</div>
+</div>
+<p class="text-[11px] text-zinc-400">公告與相簿是清單內容，請在「公告管理」、「相簿管理」修改；電話、時段、地址也可在「網站設定」統一修改。</p>
+</section>
+<!-- Panel: 網站設定 -->
+<section class="hidden space-y-6" data-panel="settings">
+<div>
+<h2 class="text-2xl font-black text-zinc-900">網站設定</h2>
+<p class="text-xs text-zinc-500 mt-1">修改後按「儲存設定」，首頁對應位置會同步更新。</p>
+</div>
+<form class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-4" id="settings-form">
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">頂部即時特報文字</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-bar" maxlength="80" required type="text"/>
+</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">諮詢專線</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-phone" required type="text"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">營業時段</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-hours" required type="text"/>
+</label>
+</div>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">展館地址</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-address" required type="text"/>
+</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">官方 LINE 連結（所有 LINE 按鈕與 QR Code）</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-line" placeholder="https://lin.ee/..." required type="url"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">Facebook 粉專連結</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="set-fb" placeholder="https://facebook.com/..." required type="url"/>
+</label>
+</div>
+<div class="flex flex-wrap gap-3 pt-2">
+<button class="px-5 py-2.5 bg-brand-red hover:bg-brand-darkred text-white text-sm font-bold rounded-xl transition inline-flex items-center gap-1.5" type="submit"><i class="ph ph-floppy-disk"></i> 儲存設定</button>
+<button class="px-5 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-sm font-bold rounded-xl transition inline-flex items-center gap-1.5" id="btn-reset" type="button"><i class="ph ph-arrow-counter-clockwise"></i> 還原所有預設內容</button>
+</div>
+</form>
+<div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 leading-relaxed flex items-start gap-2">
+<i class="ph ph-info text-base shrink-0"></i>
+<span>所有修改都儲存在 Firebase 雲端資料庫，按下儲存後，所有訪客重新整理（或正在瀏覽中）都會看到最新內容。</span>
+</div>
+</section>
+</main>
+</div>
+</div>
+<!-- 捲動進度條 / 回到頂端 -->
+<div class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-red via-orange-500 to-rose-500 z-[90]" id="scroll-progress"></div>
+<button aria-label="回到頂端" class="hidden fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-brand-red text-white shadow-lg shadow-red-500/40 items-center justify-center text-xl bounce-y" id="to-top" type="button"><i class="ph ph-arrow-up"></i></button>
+<!-- 前台編輯工具列 -->
+<div class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] w-[calc(100%-2rem)] max-w-3xl bg-zinc-950 text-white rounded-2xl shadow-2xl border border-zinc-800 px-4 py-3 flex-col sm:flex-row items-center gap-3" id="edit-bar">
+<div class="flex items-center gap-2 text-xs flex-1">
+<span class="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse shrink-0"></span>
+<span><b>編輯模式</b>：點文字直接修改、點圖片可更換，修改會自動儲存。</span>
+</div>
+<span class="text-[11px] text-emerald-400 font-mono shrink-0" id="edit-status">✓ 已儲存</span>
+<button class="px-4 py-2 rounded-lg bg-brand-red hover:bg-brand-darkred text-xs font-bold shrink-0" id="btn-edit-done" type="button">完成編輯，回後台</button>
+</div>
+<!-- 更換圖片視窗 -->
+<div class="hidden fixed inset-0 z-[80] bg-black/60 items-center justify-center p-4" id="img-modal">
+<div class="bg-white rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl">
+<h3 class="text-lg font-black text-zinc-900 flex items-center gap-2"><i class="ph ph-image text-brand-red"></i> 更換圖片</h3>
+<img alt="圖片預覽" class="w-full h-48 object-cover rounded-xl bg-zinc-100 border border-zinc-200" id="img-modal-preview"/>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">從電腦 / 手機上傳</span>
+<input accept="image/*" class="mt-1 block w-full text-xs text-zinc-600 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-brand-red file:text-white file:font-bold" id="img-modal-file" type="file"/>
+</label>
+<label class="block">
+<span class="text-xs font-bold text-zinc-700">或貼上圖片網址</span>
+<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red outline-none" id="img-modal-url" placeholder="https://..." type="url"/>
+</label>
+<div class="flex flex-wrap gap-2 justify-end pt-2">
+<button class="px-4 py-2 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 mr-auto" id="img-modal-reset" type="button">還原原圖</button>
+<button class="px-4 py-2 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700" id="img-modal-cancel" type="button">取消</button>
+<button class="px-4 py-2 rounded-lg text-xs font-bold bg-brand-red hover:bg-brand-darkred text-white" id="img-modal-apply" type="button">套用</button>
+</div>
+</div>
+</div>
+<!-- 相簿放大檢視 -->
+<div class="hidden fixed inset-0 z-[80] bg-black/85 items-center justify-center p-4 cursor-zoom-out" id="lightbox">
+<figure class="max-w-4xl w-full">
+<img alt="" class="w-full max-h-[78vh] object-contain rounded-xl" id="lightbox-img"/>
+<figcaption class="text-white text-center mt-4">
+<div class="font-bold" id="lightbox-title"></div>
+<div class="text-xs text-zinc-300 mt-1" id="lightbox-desc"></div>
+</figcaption>
+</figure>
+</div>
+<!-- Toast -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 rounded-xl bg-zinc-900 text-white text-sm font-bold shadow-xl opacity-0 pointer-events-none transition-opacity" id="toast"></div>
+<script src="firebase-config.js"></script>
+<script type="module">
+// ===== Firebase 設定：請修改 firebase-config.js，不需要改這裡 =====
+const cfg = window.FIREBASE_CONFIG || {};
+const ADMIN_EMAILS = (window.ADMIN_EMAILS || []).map((e) => String(e).trim().toLowerCase()).filter(Boolean);
+const configured = !!(cfg.apiKey && cfg.projectId);
+const SDK = window.__FIREBASE_SDK_BASE__ || 'https://www.gstatic.com/firebasejs/10.12.2/';
+const EDIT_KEY = 'pokereptile_edit';
+
+// ===== 選項與預設內容（資料庫還沒有資料時使用） =====
+const TAGS = {
+  notice: { label: '重要通知', cls: 'bg-emerald-100 text-emerald-800' },
+  fresh:  { label: '本週新進展', cls: 'bg-amber-100 text-amber-800' },
+  event:  { label: '活動快訊', cls: 'bg-red-100 text-red-700' },
+  info:   { label: '一般資訊', cls: 'bg-zinc-200 text-zinc-700' }
+};
+const COLORS = {
+  red:     { label: '紅色', cls: 'text-brand-red bg-red-50' },
+  emerald: { label: '綠色', cls: 'text-emerald-700 bg-emerald-50' },
+  cyan:    { label: '青色', cls: 'text-cyan-700 bg-cyan-50' },
+  purple:  { label: '紫色', cls: 'text-purple-700 bg-purple-50' },
+  blue:    { label: '藍色', cls: 'text-blue-700 bg-blue-50' },
+  amber:   { label: '橘色', cls: 'text-amber-700 bg-amber-50' }
+};
+const photo = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&q=80`;
+const DEFAULT_CONTENT = {
+  bar: '2026 春季特寵爬聚交流會早鳥預約中！館內活體均完成 14 日高規格檢疫與履歷建檔。',
+  phone: '(02) 2888-8888',
+  hours: '週二至週日 13:00 - 21:30',
+  address: '台北市生態特寵園區大道 88 號',
+  lineUrl: 'https://line.me',
+  fbUrl: 'https://facebook.com',
+  announcements: [
+    { id: 'a1', tag: 'notice', date: '2026-03-12', line: true,
+      title: '守宮與幼蛇換季保溫燈具安全檢查公告',
+      body: '近期日夜溫差劇烈，請各位訓練家留意夜間溫控排程，道館免費提供檢測服務。' },
+    { id: 'a2', tag: 'fresh', date: '2026-03-08', line: false,
+      title: '高等級黑夜守宮、藍舌蜥、墨西哥黑王蛇出關',
+      body: '本次批次體質已全數完成 14 日嚴格檢疫與進食開口，歡迎洽詢 LINE 索取高畫質細節照片與檔案。' }
+  ],
+  texts: {},   // 前台即時編輯的文字
+  images: {},  // 前台即時編輯的圖片（網址，或 upload:編號 指向 uploads 集合）
+  updatedAt: null
+};
+const DEFAULT_GALLERY = [
+  { id: 'g1', order: 0, color: 'red', tag: '守宮上手體驗', img: photo('1548767797-d8c844163c4c'),
+    title: '豹紋守宮與睫角守宮上手手感體驗', desc: '親自感受守宮腳趾黏毛的微神奇觸感，由專員一對一指導正確上手抱持姿勢。' },
+  { id: 'g2', order: 1, color: 'emerald', tag: '生態造景工坊', img: photo('1509198397868-475647b2a1e5'),
+    title: '雨林水陸陰景缸實作工坊：秘境造景', desc: '學員親自挑選沉木、火山石與附生鳳梨，構築自動噴霧微氣候，把熱帶雨林帶回家。' },
+  { id: 'g3', order: 2, color: 'cyan', tag: '親子生態科普', img: photo('1574063413132-355dbfd83e25'),
+    title: '鬆獅蜥與巨蜥互動分享會：生態科普', desc: '破解對冷血爬蟲的刻板偏見，讓孩子們在安全指導下近距離觀察爬蟲體溫與手臂質地社交行為。' },
+  { id: 'g4', order: 3, color: 'purple', tag: '品系基因解析', img: photo('1534361960057-19889db9621e'),
+    title: '珍稀玉米蛇與球蟒基因品系賞析講座', desc: '解析隱性、共顯性與多重複合基因密碼，讓收藏級玩家更深入理解繁殖美學。' },
+  { id: 'g5', order: 4, color: 'blue', tag: '造景藝術', img: photo('1520302630591-fd1c66edc19d'),
+    title: '水族造景比賽獲獎造景缸常態展示', desc: '館內設有 4 尺超白高透水草景觀缸，提供水質穩定調控與二氧化碳配置現場技藝觀摩。' },
+  { id: 'g6', order: 5, color: 'amber', tag: '訓練家交流', img: photo('1517457373958-b7bdd4587205'),
+    title: '玩家社群聚會：帶著愛寵回娘家交流', desc: '週末限定常態交流小聚，分享換季照料經驗，現場更提供免費體重測量與外觀檢視。' }
+];
+
+// ===== 工具 =====
+const $ = (id) => document.getElementById(id);
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtDate = (d) => d.replaceAll('-', '.');
+const fmtTime = (date) => date.toLocaleString('zh-TW', { hour12: false });
+const isLink = (v) => /^https?:\/\//i.test(v);
+const isImgSrc = (v) => isLink(v) || /^data:image\//i.test(v);
+const uid = (p) => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const qr = (url) => 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(url);
+const show = (id, on) => { $(id).classList.toggle('hidden', !on); $(id).classList.toggle('flex', on); };
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.remove('opacity-0');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.add('opacity-0'), 2600);
+}
+
+// 照片先縮小壓縮再存（Firestore 單筆資料上限 1MB）
+function compressImage(file, max = 1200) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onerror = reject;
+    fr.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let q = 0.82, m = max, out = '';
+        for (let i = 0; i < 6; i++) {
+          const s = Math.min(1, m / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.round(img.width * s);
+          c.height = Math.round(img.height * s);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          out = c.toDataURL('image/jpeg', q);
+          if (out.length < 600000) break;
+          q -= 0.1;
+          m *= 0.85;
+        }
+        resolve(out);
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+// 只保留換行、圖示與簡單樣式，其他標籤一律轉成純文字
+function clean(html) {
+  const t = document.createElement('template');
+  t.innerHTML = html;
+  (function walk(node) {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 1) {
+        if (!['BR', 'SPAN', 'I', 'B', 'STRONG'].includes(n.tagName)) {
+          n.replaceWith(document.createTextNode(n.textContent));
+          return;
+        }
+        [...n.attributes].forEach((a) => { if (a.name !== 'class') n.removeAttribute(a.name); });
+        walk(n);
+      } else if (n.nodeType !== 3) {
+        n.remove();
+      }
+    });
+  })(t.content);
+  return t.innerHTML;
+}
+
+// ===== 狀態 =====
+let content = clone(DEFAULT_CONTENT);
+let galleryDocs = [];
+let seeded = false;          // 資料庫裡是否已有內容
+let user = null;
+let authReady = !configured;
+let F = null, auth = null, db = null, contentRef = null;
+const uploadCache = new Map();
+const gallery = () => (seeded ? galleryDocs : DEFAULT_GALLERY);
+const isAdminEmail = (e) => !ADMIN_EMAILS.length || ADMIN_EMAILS.includes(String(e || '').toLowerCase());
+
+// ===== 前台可編輯區塊：依頁面原始結構自動編號 =====
+const home = $('view-home');
+const SKIP = '#ann-list,#gallery-list,[data-live],[data-noedit]';
+const LEAF_TAGS = ['BR', 'SPAN', 'I', 'B', 'STRONG'];
+const editables = [];
+const editImgs = [];
+const orig = {};
+(function scan() {
+  let ti = 0, ii = 0;
+  home.querySelectorAll('a[href^="https://line.me"]').forEach((a) => { a.dataset.link = 'line'; });
+  home.querySelectorAll('a[href^="https://facebook.com"]').forEach((a) => { a.dataset.link = 'fb'; });
+  home.querySelectorAll('*').forEach((el) => {
+    if (el.closest(SKIP)) return;
+    if (el.tagName === 'IMG') {
+      const k = 'i' + (ii++);
+      el.dataset.k = k;
+      orig[k] = el.getAttribute('src');
+      editImgs.push(el);
+      return;
+    }
+    if (['I', 'BR', 'SCRIPT', 'STYLE', 'svg'].includes(el.tagName)) return;
+    if (el.parentElement.closest('[data-k]')) return;
+    // 自己要有文字（只是包住子元素的容器就往下找），且只含簡單子標籤
+    const ownText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!ownText || el.querySelector('[data-bind]')) return;
+    if (![...el.children].every((c) => LEAF_TAGS.includes(c.tagName) && c.children.length === 0)) return;
+    const k = el.dataset.bind ? 'b-' + el.dataset.bind : 't' + (ti++);
+    el.dataset.k = k;
+    orig[k] = el.innerHTML;
+    editables.push(el);
+  });
+})();
+
+function resolveImg(ref, cb) {
+  if (!ref.startsWith('upload:')) return cb(ref);
+  const id = ref.slice(7);
+  if (uploadCache.has(id)) return cb(uploadCache.get(id));
+  if (!F) return;
+  F.getDoc(F.doc(db, 'uploads', id))
+    .then((s) => { if (s.exists()) { uploadCache.set(id, s.data().data); cb(s.data().data); } })
+    .catch((e) => console.error(e));
+}
+
+function applyContent() {
+  editables.forEach((el) => {
+    if (editMode && (el === document.activeElement || dirty.has(el))) return; // 正在打字的不要覆蓋
+    if (el.dataset.bind) el.textContent = content[el.dataset.bind];
+    else el.innerHTML = content.texts[el.dataset.k] ?? orig[el.dataset.k];
+  });
+  editImgs.forEach((img) => {
+    const k = img.dataset.k, v = content.images[k];
+    if (v) resolveImg(v, (src) => { if (content.images[k] === v && img.getAttribute('src') !== src) img.src = src; });
+    else {
+      const want = img.hasAttribute('data-qr') ? qr(content.lineUrl) : orig[k];
+      if (img.getAttribute('src') !== want) img.src = want;
+    }
+  });
+  home.querySelectorAll('a[data-link="line"]').forEach((a) => { a.href = content.lineUrl; });
+  home.querySelectorAll('a[data-link="fb"]').forEach((a) => { a.href = content.fbUrl; });
+}
+
+// ===== 前台清單渲染 =====
+const sortedAnn = () => [...content.announcements].sort((a, b) => b.date.localeCompare(a.date));
+function renderAnn() {
+  const list = sortedAnn().slice(0, 4);
+  $('ann-list').innerHTML = list.length ? list.map((a) => {
+    const tag = TAGS[a.tag] || TAGS.info;
+    return `<div class="bg-[#fbf8fc] p-5 rounded-2xl border border-zinc-200 hover:border-zinc-300">
+      <div class="flex items-center justify-between text-xs mb-2">
+        <span class="px-2 py-0.5 rounded ${tag.cls} font-bold text-[10px]">${tag.label}</span>
+        <span class="text-zinc-400 text-xs font-mono">${esc(fmtDate(a.date))}</span>
+      </div>
+      <h4 class="text-base font-bold text-zinc-900 mb-1">${esc(a.title)}</h4>
+      <p class="text-xs text-zinc-600 leading-relaxed ${a.line ? 'mb-3' : ''}">${esc(a.body)}</p>
+      ${a.line ? `<a class="text-xs font-bold text-[#06c755] hover:underline inline-flex items-center gap-1" href="${esc(content.lineUrl)}" rel="noopener noreferrer" target="_blank"><i class="ph ph-chat-circle"></i> LINE 諮詢</a>` : ''}
+    </div>`;
+  }).join('') : '<div class="p-5 rounded-2xl border border-dashed border-zinc-300 text-center text-xs text-zinc-400">目前沒有新公告</div>';
+}
+
+function renderGallery() {
+  const list = gallery();
+  $('gallery-list').innerHTML = list.length ? list.map((g, i) => {
+    const color = COLORS[g.color] || COLORS.red;
+    return `<div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group cursor-zoom-in" data-gi="${i}">
+      <div class="h-48 overflow-hidden bg-zinc-900 relative">
+        <img alt="${esc(g.title)}" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-500" loading="lazy" src="${esc(g.img)}"/>
+        <span class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 text-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition"><i class="ph ph-magnifying-glass-plus"></i></span>
+      </div>
+      <div class="p-5">
+        <span class="text-[11px] font-bold ${color.cls} px-2 py-0.5 rounded">${esc(g.tag)}</span>
+        <h3 class="font-bold text-zinc-900 text-sm mt-2">${esc(g.title)}</h3>
+        <p class="text-xs text-zinc-500 mt-1 leading-relaxed">${esc(g.desc)}</p>
+      </div>
+    </div>`;
+  }).join('') : '<div class="col-span-full p-10 text-center text-sm text-zinc-400 border border-dashed border-zinc-300 rounded-2xl">相簿目前沒有照片</div>';
+}
+
+function refreshHome() {
+  applyContent();
+  renderAnn();
+  renderGallery();
+  observeReveal();
+}
+
+// ===== 動態效果：捲動浮現、數字跳動、即時溫濕度 =====
+const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+  entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    const el = en.target;
+    el.classList.add('in');
+    io.unobserve(el);
+    setTimeout(() => { el.style.transitionDelay = ''; }, 1000);
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
+
+function observeReveal() {
+  home.querySelectorAll('section h2, section .grid > *, #ann-list > *').forEach((el) => {
+    if (el.classList.contains('reveal')) return;
+    el.classList.add('reveal');
+    el.style.transitionDelay = ([...el.parentElement.children].indexOf(el) % 4) * 90 + 'ms';
+    if (/rounded-(2xl|3xl)/.test(el.className)) el.classList.add('lift');
+    if (io) io.observe(el); else el.classList.add('in');
+  });
+}
+
+home.querySelectorAll('#systems .group > div:first-child, #services .w-12, #contact .ph, #announcements .w-10').forEach((el) => el.classList.add('wiggle-i'));
+
+// HUD 數字每次進入畫面時從 0 跳到目標值
+const counters = [...home.querySelectorAll('.hud-glow [data-k]')].filter((el) => /^\d{2,}/.test(el.textContent.trim()));
+function countUp(el) {
+  if (editMode || el._counting) return;
+  const m = el.textContent.trim().match(/^(\d+)([\s\S]*)$/);
+  if (!m) return;
+  const target = +m[1], rest = m[2], html = el.innerHTML, t0 = performance.now();
+  el._counting = true;
+  (function step(now) {
+    if (editMode) { el.innerHTML = html; el._counting = false; return; }
+    const p = Math.min(1, (now - t0) / 1300);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + rest;
+    if (p < 1) requestAnimationFrame(step);
+    else { el.innerHTML = html; el._counting = false; }
+  })(t0);
+}
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver((en) => { if (en[0].isIntersecting) counters.forEach(countUp); }, { threshold: 0.4 })
+    .observe(home.querySelector('.hud-glow'));
+}
+
+let temp = 28.5, hum = 65;
+setInterval(() => {
+  temp = Math.min(30, Math.max(27, temp + (Math.random() - 0.5) * 0.3));
+  hum = Math.min(72, Math.max(60, hum + (Math.random() - 0.5) * 1.2));
+  const t = temp.toFixed(1), h = Math.round(hum);
+  home.querySelectorAll('[data-live="temp"]').forEach((el) => { el.innerHTML = `${t}<span class="text-base font-normal">°C</span>`; });
+  home.querySelectorAll('[data-live="hum"]').forEach((el) => { el.innerHTML = `${h}<span class="text-base font-normal">%</span>`; });
+  $('stat-temp').textContent = t;
+  $('stat-hum').textContent = h;
+}, 2200);
+
+function updateFloating() {
+  const homeOn = !home.classList.contains('hidden');
+  const max = document.documentElement.scrollHeight - innerHeight;
+  $('scroll-progress').style.transform = `scaleX(${homeOn && max > 0 ? scrollY / max : 0})`;
+  show('to-top', homeOn && !editMode && scrollY > 600);
+}
+addEventListener('scroll', updateFloating, { passive: true });
+$('to-top').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+// 相簿放大
+$('gallery-list').addEventListener('click', (e) => {
+  const card = e.target.closest('[data-gi]');
+  if (!card || editMode) return;
+  const g = gallery()[+card.dataset.gi];
+  if (!g) return;
+  $('lightbox-img').src = g.img;
+  $('lightbox-img').alt = g.title;
+  $('lightbox-title').textContent = g.title;
+  $('lightbox-desc').textContent = g.desc;
+  show('lightbox', true);
+});
+$('lightbox').addEventListener('click', () => show('lightbox', false));
+addEventListener('keydown', (e) => { if (e.key === 'Escape') { show('lightbox', false); show('img-modal', false); } });
+
+// ===== 寫入 Firebase =====
+async function write(fn, okMsg) {
+  if (!F || !user) { toast('⚠️ 請先登入管理員帳號'); return false; }
+  try {
+    await fn();
+    if (okMsg) toast(okMsg);
+    return true;
+  } catch (e) {
+    console.error(e);
+    toast(e.code === 'permission-denied'
+      ? '⚠️ 沒有寫入權限：請確認 Firestore 規則裡的管理員 Email'
+      : '⚠️ 儲存失敗：' + (e.code || e.message));
+    return false;
+  }
+}
+const patchContent = (patch) => F.updateDoc(contentRef, { ...patch, updatedAt: F.serverTimestamp() });
+
+// 第一次登入時，把預設內容寫進資料庫
+async function ensureSeed() {
+  const snap = await F.getDoc(contentRef);
+  if (snap.exists()) return;
+  const b = F.writeBatch(db);
+  b.set(contentRef, { ...clone(DEFAULT_CONTENT), updatedAt: F.serverTimestamp() });
+  DEFAULT_GALLERY.forEach(({ id, ...data }) => b.set(F.doc(db, 'gallery', id), data));
+  await b.commit();
+}
+
+async function storeUpload(dataUrl) {
+  const id = uid('u');
+  await F.setDoc(F.doc(db, 'uploads', id), { data: dataUrl, at: F.serverTimestamp() });
+  uploadCache.set(id, dataUrl);
+  return 'upload:' + id;
+}
+function dropUpload(ref) {
+  if (typeof ref !== 'string' || !ref.startsWith('upload:')) return;
+  const id = ref.slice(7);
+  uploadCache.delete(id);
+  F.deleteDoc(F.doc(db, 'uploads', id)).catch((e) => console.error(e));
+}
+
+// ===== 前台即時編輯模式 =====
+let editMode = false;
+const dirty = new Set();
+let saveTimer;
+
+function setEditMode(on) {
+  editMode = on;
+  try { on ? sessionStorage.setItem(EDIT_KEY, '1') : sessionStorage.removeItem(EDIT_KEY); } catch (e) {}
+  document.body.classList.toggle('editing', on);
+  editables.forEach((el) => { if (on) el.setAttribute('contenteditable', 'true'); else el.removeAttribute('contenteditable'); });
+  show('edit-bar', on);
+  if (on) { applyContent(); $('edit-status').textContent = '✓ 已同步'; }
+  updateFloating();
+}
+
+function commitEdits() {
+  clearTimeout(saveTimer);
+  if (!dirty.size) return;
+  const patch = {};
+  dirty.forEach((el) => {
+    const k = el.dataset.k;
+    if (el.dataset.bind) {
+      const v = el.textContent.trim();
+      patch[el.dataset.bind] = v;
+      home.querySelectorAll(`[data-bind="${el.dataset.bind}"]`).forEach((o) => { if (o !== el) o.textContent = v; });
+    } else {
+      const v = clean(el.innerHTML);
+      patch['texts.' + k] = v === orig[k] ? F.deleteField() : v;
+    }
+  });
+  dirty.clear();
+  $('edit-status').textContent = '儲存中…';
+  write(() => patchContent(patch)).then((ok) => {
+    $('edit-status').textContent = ok ? '✓ 已儲存，所有訪客可見' : '⚠ 儲存失敗';
+  });
+}
+
+home.addEventListener('input', (e) => {
+  if (!editMode) return;
+  const el = e.target.closest('[data-k]');
+  if (!el) return;
+  dirty.add(el);
+  $('edit-status').textContent = '編輯中…';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(commitEdits, 800);
+});
+home.addEventListener('focusout', () => { if (editMode) commitEdits(); });
+home.addEventListener('keydown', (e) => {
+  if (editMode && e.key === 'Enter' && e.target.closest('[data-k]')) {
+    e.preventDefault();
+    document.execCommand('insertLineBreak');
+  }
+});
+home.addEventListener('paste', (e) => {
+  if (!editMode || !e.target.closest('[data-k]')) return;
+  e.preventDefault();
+  document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text'));
+});
+home.addEventListener('click', (e) => {
+  if (!editMode) return;
+  if (e.target.closest('a')) e.preventDefault();
+  const img = e.target.closest('img[data-k]');
+  if (img) { openImgModal(img); return; }
+  if (e.target.closest('#ann-list')) toast('公告請到後台「公告管理」修改');
+  else if (e.target.closest('#gallery-list')) toast('相簿請到後台「相簿管理」修改');
+}, true);
+
+// 更換圖片視窗
+let imgTarget = null, imgPending = null;
+function openImgModal(img) {
+  imgTarget = img;
+  imgPending = null;
+  $('img-modal-preview').src = img.src;
+  $('img-modal-file').value = '';
+  $('img-modal-url').value = '';
+  show('img-modal', true);
+}
+$('img-modal-file').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  compressImage(f).then((d) => { imgPending = d; $('img-modal-preview').src = d; }).catch(() => toast('無法讀取這張圖片'));
+});
+$('img-modal-url').addEventListener('input', (e) => {
+  const v = e.target.value.trim();
+  if (isLink(v)) { imgPending = v; $('img-modal-preview').src = v; }
+});
+$('img-modal-apply').addEventListener('click', async () => {
+  if (!imgPending) { show('img-modal', false); return; }
+  const k = imgTarget.dataset.k, prev = content.images[k], pending = imgPending;
+  $('img-modal-apply').disabled = true;
+  $('img-modal-apply').textContent = '上傳中…';
+  const ok = await write(async () => {
+    const ref = pending.startsWith('data:') ? await storeUpload(pending) : pending;
+    await patchContent({ ['images.' + k]: ref });
+  }, '圖片已更換，所有訪客可見');
+  if (ok && prev) dropUpload(prev);
+  $('img-modal-apply').disabled = false;
+  $('img-modal-apply').textContent = '套用';
+  show('img-modal', false);
+});
+$('img-modal-reset').addEventListener('click', async () => {
+  const k = imgTarget.dataset.k, prev = content.images[k];
+  show('img-modal', false);
+  if (!prev) return;
+  if (await write(() => patchContent({ ['images.' + k]: F.deleteField() }), '已還原原圖')) dropUpload(prev);
+});
+$('img-modal-cancel').addEventListener('click', () => show('img-modal', false));
+$('img-modal').addEventListener('click', (e) => { if (e.target.id === 'img-modal') show('img-modal', false); });
+
+$('btn-edit-done').addEventListener('click', () => {
+  commitEdits();
+  setEditMode(false);
+  location.hash = '#admin';
+});
+document.querySelectorAll('[data-edit-mode]').forEach((b) => b.addEventListener('click', () => {
+  setEditMode(true);
+  location.hash = '#hero';
+  toast('✏️ 已進入編輯模式，點紅色虛線框即可修改');
+}));
+
+// ===== 後台 =====
+let currentTab = 'overview';
+function showTab(name) {
+  currentTab = name;
+  document.querySelectorAll('[data-panel]').forEach((p) => p.classList.toggle('hidden', p.dataset.panel !== name));
+  document.querySelectorAll('.admin-tab').forEach((b) => {
+    const on = b.dataset.tab === name;
+    b.classList.toggle('bg-brand-red', on);
+    b.classList.toggle('text-white', on);
+    b.classList.toggle('bg-white', !on);
+    b.classList.toggle('text-zinc-700', !on);
+  });
+  if (name === 'settings') fillSettings();
+}
+
+const adminVisible = () => !$('view-admin').classList.contains('hidden');
+
+// 統計與清單（資料庫有變動就重畫，不會動到正在填寫的表單）
+function renderAdminLists() {
+  $('stat-ann').textContent = content.announcements.length;
+  $('stat-gallery').textContent = gallery().length;
+  $('stat-edits').textContent = Object.keys(content.texts).length;
+  $('stat-imgs').textContent = Object.keys(content.images).length;
+  const up = content.updatedAt;
+  $('stat-updated').textContent = up && up.toDate ? fmtTime(up.toDate()) : (seeded ? '剛剛' : '尚未初始化');
+
+  $('ann-table').innerHTML = content.announcements.length ? sortedAnn().map((a) => {
+    const tag = TAGS[a.tag] || TAGS.info;
+    return `<div class="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 text-[11px] mb-1">
+          <span class="px-2 py-0.5 rounded ${tag.cls} font-bold">${tag.label}</span>
+          <span class="font-mono text-zinc-400">${esc(fmtDate(a.date))}</span>
+        </div>
+        <div class="text-sm font-bold text-zinc-900 truncate">${esc(a.title)}</div>
+        <div class="text-xs text-zinc-500 truncate">${esc(a.body)}</div>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <button class="px-3 py-1.5 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700" data-edit="${esc(a.id)}" type="button"><i class="ph ph-pencil-simple"></i> 編輯</button>
+        <button class="px-3 py-1.5 rounded-lg text-xs font-bold bg-red-50 hover:bg-red-100 text-brand-red" data-del="${esc(a.id)}" type="button"><i class="ph ph-trash"></i> 刪除</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="p-6 text-center text-xs text-zinc-400">目前沒有公告，從上方表單新增一則吧！</div>';
+
+  const list = gallery();
+  $('gal-table').innerHTML = list.length ? list.map((g, i) => {
+    const color = COLORS[g.color] || COLORS.red;
+    return `<div class="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+      <img alt="" class="w-full sm:w-24 h-32 sm:h-16 object-cover rounded-lg bg-zinc-100 shrink-0" loading="lazy" src="${esc(g.img)}"/>
+      <div class="flex-1 min-w-0">
+        <span class="text-[11px] font-bold ${color.cls} px-2 py-0.5 rounded">${esc(g.tag)}</span>
+        <div class="text-sm font-bold text-zinc-900 truncate mt-1">${esc(g.title)}</div>
+        <div class="text-xs text-zinc-500 truncate">${esc(g.desc)}</div>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <button aria-label="上移" class="w-8 h-8 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 disabled:opacity-30" data-gup="${i}" ${i === 0 ? 'disabled' : ''} type="button"><i class="ph ph-arrow-up"></i></button>
+        <button aria-label="下移" class="w-8 h-8 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 disabled:opacity-30" data-gdown="${i}" ${i === list.length - 1 ? 'disabled' : ''} type="button"><i class="ph ph-arrow-down"></i></button>
+        <button class="px-3 py-1.5 rounded-lg text-xs font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-700" data-gedit="${esc(g.id)}" type="button"><i class="ph ph-pencil-simple"></i> 編輯</button>
+        <button class="px-3 py-1.5 rounded-lg text-xs font-bold bg-red-50 hover:bg-red-100 text-brand-red" data-gdel="${esc(g.id)}" type="button"><i class="ph ph-trash"></i> 刪除</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="p-6 text-center text-xs text-zinc-400">相簿是空的，從上方表單上傳第一張照片吧！</div>';
+}
+
+function fillSettings() {
+  $('set-bar').value = content.bar;
+  $('set-phone').value = content.phone;
+  $('set-hours').value = content.hours;
+  $('set-address').value = content.address;
+  $('set-line').value = content.lineUrl;
+  $('set-fb').value = content.fbUrl;
+}
+
+async function loadLogins() {
+  if (!F || !user) return;
+  try {
+    const col = F.collection(db, 'logins');
+    const [qs, count] = await Promise.all([
+      F.getDocs(F.query(col, F.orderBy('at', 'desc'), F.limit(6))),
+      F.getCountFromServer(col)
+    ]);
+    $('stat-logins').textContent = count.data().count;
+    $('login-log').innerHTML = qs.docs.length ? qs.docs.map((d) => {
+      const r = d.data();
+      const when = r.at && r.at.toDate ? fmtTime(r.at.toDate()) : '剛剛';
+      return `<li class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg bg-zinc-50"><span class="flex items-center gap-2 min-w-0"><i class="ph ph-check-circle text-emerald-600 shrink-0"></i><span class="truncate">${esc(r.email || '')}</span></span><span class="font-mono text-zinc-400 shrink-0">${esc(when)}</span></li>`;
+    }).join('') : '<li class="text-zinc-400">尚無紀錄</li>';
+  } catch (e) {
+    console.error(e);
+    $('login-log').innerHTML = '<li class="text-zinc-400">無法讀取登入紀錄</li>';
+  }
+}
+
+function renderAdmin() {
+  $('admin-user').textContent = user ? user.email : '';
+  renderAdminLists();
+  fillSettings();
+  loadLogins();
+  showTab(currentTab);
+}
+
+// ===== 路由：#login 登入頁、#admin 後台，其餘為官網 =====
+let lastView = null;
+function route() {
+  const hash = location.hash;
+  let view = 'home';
+  if (hash === '#login' || hash === '#admin') view = user ? 'admin' : 'login';
+  const want = view === 'home' ? hash : '#' + view;
+  if (want !== hash) history.replaceState(null, '', want);
+  if (editMode && (view !== 'home' || !user)) setEditMode(false);
+
+  home.classList.toggle('hidden', view !== 'home');
+  show('view-login', view === 'login');
+  $('view-admin').classList.toggle('hidden', view !== 'admin');
+  show('lightbox', false);
+
+  if (view === 'home') {
+    // 從後台切回官網時，區塊剛顯示，需手動捲到錨點
+    const target = hash.length > 1 && document.getElementById(hash.slice(1));
+    if (target && lastView !== 'home') target.scrollIntoView();
+    document.title = '爬可夢 爬寵水族道館 ‧ 官方網站首頁';
+  } else {
+    if (lastView !== view) window.scrollTo(0, 0);
+    if (view === 'login') {
+      if (lastView !== 'login') $('login-error').classList.add('hidden');
+      $('login-submit').disabled = !authReady;
+      $('login-submit-label').textContent = authReady ? '立即登入管理後台 (Sign In)' : '確認登入狀態中…';
+      document.title = '爬可夢 爬寵水族道館 ‧ CMS 後台管理員登入';
+    } else {
+      if (lastView !== 'admin') renderAdmin();
+      document.title = '爬可夢 CMS 管理後台';
+    }
+  }
+  lastView = view;
+  updateFloating();
+}
+
+// ===== 連線 Firebase =====
+async function initFirebase() {
+  if (!configured) {
+    $('fb-missing').classList.remove('hidden');
+    return;
+  }
+  try {
+    const [appM, authM, fsM] = await Promise.all(
+      ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].map((f) => import(SDK + f)));
+    F = { ...authM, ...fsM };
+    const app = appM.initializeApp(cfg);
+    auth = authM.getAuth(app);
+    db = fsM.getFirestore(app);
+    contentRef = F.doc(db, 'site', 'content');
+
+    // 即時同步：資料庫一有變動，所有正在瀏覽的訪客畫面都會更新
+    F.onSnapshot(contentRef, (snap) => {
+      seeded = snap.exists();
+      content = Object.assign(clone(DEFAULT_CONTENT), seeded ? snap.data() : {});
+      refreshHome();
+      if (adminVisible()) renderAdminLists();
+    }, (e) => console.error(e));
+    F.onSnapshot(F.collection(db, 'gallery'), (qs) => {
+      galleryDocs = qs.docs.map((d) => ({ ...d.data(), id: d.id })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      renderGallery();
+      observeReveal();
+      if (adminVisible()) renderAdminLists();
+    }, (e) => console.error(e));
+
+    F.onAuthStateChanged(auth, async (u) => {
+      if (u && !isAdminEmail(u.email)) {
+        user = null;
+        authReady = true;
+        await F.signOut(auth);
+        showLoginError('這個帳號沒有後台管理權限');
+        route();
+        return;
+      }
+      user = u;
+      authReady = true;
+      if (u) ensureSeed().catch((e) => { console.error(e); toast('⚠️ 無法初始化資料庫：' + (e.code || e.message)); });
+      lastView = lastView === 'admin' ? null : lastView; // 換人登入時重畫後台
+      route();
+      try { if (u && sessionStorage.getItem(EDIT_KEY) === '1' && !home.classList.contains('hidden')) setEditMode(true); } catch (e) {}
+    });
+  } catch (e) {
+    console.error(e);
+    authReady = true;
+    toast('⚠️ 無法連線 Firebase，請檢查 firebase-config.js');
+    route();
+  }
+}
+
+// ===== 事件：登入 / 登出 =====
+function showLoginError(msg) {
+  $('login-error').textContent = '❌ ' + msg;
+  $('login-error').classList.remove('hidden');
+}
+const AUTH_ERRORS = {
+  'auth/invalid-credential': 'Email 或密碼錯誤',
+  'auth/wrong-password': 'Email 或密碼錯誤',
+  'auth/user-not-found': 'Email 或密碼錯誤',
+  'auth/invalid-email': 'Email 格式不正確',
+  'auth/user-disabled': '這個帳號已被停用',
+  'auth/too-many-requests': '嘗試次數太多，請稍後再試',
+  'auth/network-request-failed': '網路連線失敗，請稍後再試'
+};
+
+$('btn-eye').addEventListener('click', () => {
+  const pwd = $('password');
+  const showPwd = pwd.type === 'password';
+  pwd.type = showPwd ? 'text' : 'password';
+  $('eye-icon').className = showPwd ? 'ph ph-eye' : 'ph ph-eye-slash';
+});
+$('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!configured || !F) { showLoginError('網站尚未連接 Firebase，請先依 README.md 完成設定'); return; }
+  const email = $('username').value.trim();
+  if (!isAdminEmail(email)) { showLoginError('這個帳號沒有後台管理權限'); return; }
+  $('login-submit').disabled = true;
+  $('login-submit-label').textContent = '登入中…';
+  $('login-error').classList.add('hidden');
+  try {
+    await F.setPersistence(auth, $('remember').checked ? F.browserLocalPersistence : F.browserSessionPersistence);
+    const cred = await F.signInWithEmailAndPassword(auth, email, $('password').value);
+    user = cred.user;
+    authReady = true;
+    $('password').value = '';
+    await F.addDoc(F.collection(db, 'logins'), { email, at: F.serverTimestamp() }).catch((err) => console.error(err));
+    loadLogins(); // 登入狀態一變後台就先畫好了，補上這次的紀錄
+    currentTab = 'overview';
+    location.hash = '#admin';
+    toast('🎉 登入成功，歡迎進入管理後台');
+  } catch (err) {
+    showLoginError(AUTH_ERRORS[err.code] || '登入失敗：' + (err.code || err.message));
+  } finally {
+    $('login-submit').disabled = false;
+    $('login-submit-label').textContent = '立即登入管理後台 (Sign In)';
+  }
+});
+$('btn-forgot').addEventListener('click', async () => {
+  const email = $('username').value.trim();
+  if (!configured || !F) { showLoginError('網站尚未連接 Firebase'); return; }
+  if (!email) { showLoginError('請先在上方輸入你的管理員 Email'); $('username').focus(); return; }
+  try {
+    await F.sendPasswordResetEmail(auth, email);
+    toast('📧 已寄出重設密碼信，請到信箱收信');
+  } catch (err) {
+    showLoginError(AUTH_ERRORS[err.code] || '寄送失敗：' + (err.code || err.message));
+  }
+});
+$('btn-logout').addEventListener('click', async () => {
+  commitEdits();
+  setEditMode(false);
+  if (F) await F.signOut(auth);
+  location.hash = '#login';
+  toast('已安全登出');
+});
+
+document.querySelectorAll('.admin-tab').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.goto)));
+
+// ===== 事件：公告管理 =====
+$('ann-tag').innerHTML = Object.entries(TAGS).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+function resetAnnForm() {
+  $('ann-form').reset();
+  $('ann-id').value = '';
+  $('ann-date').value = new Date().toISOString().slice(0, 10);
+  $('ann-form-title').textContent = '新增公告';
+  $('ann-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 發布公告';
+  $('ann-cancel').classList.add('hidden');
+}
+$('ann-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    id: $('ann-id').value || uid('a'),
+    tag: $('ann-tag').value,
+    date: $('ann-date').value,
+    title: $('ann-title').value.trim(),
+    body: $('ann-body').value.trim(),
+    line: $('ann-line').checked
+  };
+  const list = clone(content.announcements);
+  const i = list.findIndex((a) => a.id === data.id);
+  if (i >= 0) list[i] = data; else list.push(data);
+  if (await write(() => patchContent({ announcements: list }), i >= 0 ? '公告已更新' : '公告已發布到首頁')) resetAnnForm();
+});
+$('ann-cancel').addEventListener('click', resetAnnForm);
+$('ann-table').addEventListener('click', (e) => {
+  const edit = e.target.closest('[data-edit]');
+  const del = e.target.closest('[data-del]');
+  if (edit) {
+    const a = content.announcements.find((x) => x.id === edit.dataset.edit);
+    if (!a) return;
+    $('ann-id').value = a.id;
+    $('ann-tag').value = a.tag;
+    $('ann-date').value = a.date;
+    $('ann-title').value = a.title;
+    $('ann-body').value = a.body;
+    $('ann-line').checked = !!a.line;
+    $('ann-form-title').textContent = '編輯公告';
+    $('ann-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 儲存變更';
+    $('ann-cancel').classList.remove('hidden');
+    $('ann-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (del) {
+    if (!confirm('確定要刪除這則公告嗎？')) return;
+    write(() => patchContent({ announcements: content.announcements.filter((x) => x.id !== del.dataset.del) }), '公告已刪除');
+  }
+});
+
+// ===== 事件：相簿管理 =====
+$('gal-color').innerHTML = Object.entries(COLORS).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+let galImg = null;
+function setGalPreview(src) {
+  galImg = src;
+  $('gal-preview').classList.toggle('hidden', !src);
+  if (src) $('gal-preview').src = src; else $('gal-preview').removeAttribute('src');
+}
+function resetGalForm() {
+  $('gal-form').reset();
+  $('gal-id').value = '';
+  setGalPreview(null);
+  $('gal-form-title').textContent = '新增相簿照片';
+  $('gal-submit').innerHTML = '<i class="ph ph-plus"></i> 新增到相簿';
+  $('gal-submit').disabled = false;
+  $('gal-cancel').classList.add('hidden');
+}
+$('gal-file').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  compressImage(f, 1000).then((d) => { setGalPreview(d); $('gal-url').value = ''; }).catch(() => toast('無法讀取這張圖片'));
+});
+$('gal-url').addEventListener('input', (e) => {
+  const v = e.target.value.trim();
+  if (isLink(v)) setGalPreview(v);
+});
+$('gal-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!galImg || !isImgSrc(galImg)) { toast('請先上傳照片或貼上圖片網址'); return; }
+  const id = $('gal-id').value || uid('g');
+  const existing = galleryDocs.find((g) => g.id === id);
+  const minOrder = galleryDocs.reduce((m, g) => Math.min(m, g.order ?? 0), 0);
+  const data = {
+    order: existing ? (existing.order ?? 0) : minOrder - 1,   // 新照片排最前面
+    color: $('gal-color').value,
+    tag: $('gal-tag').value.trim(),
+    title: $('gal-title').value.trim(),
+    desc: $('gal-desc').value.trim(),
+    img: galImg
+  };
+  $('gal-submit').disabled = true;
+  $('gal-submit').textContent = '上傳中…';
+  const ok = await write(() => F.setDoc(F.doc(db, 'gallery', id), data), existing ? '照片已更新' : '📸 照片已新增到首頁相簿');
+  if (ok) resetGalForm();
+  else { $('gal-submit').disabled = false; $('gal-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 再試一次'; }
+});
+$('gal-cancel').addEventListener('click', resetGalForm);
+$('gal-table').addEventListener('click', async (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const list = gallery();
+  if (b.dataset.gedit !== undefined) {
+    const item = list.find((g) => g.id === b.dataset.gedit);
+    if (!item) return;
+    $('gal-id').value = item.id;
+    $('gal-color').value = item.color;
+    $('gal-tag').value = item.tag;
+    $('gal-title').value = item.title;
+    $('gal-desc').value = item.desc;
+    $('gal-url').value = isLink(item.img) ? item.img : '';
+    $('gal-file').value = '';
+    setGalPreview(item.img);
+    $('gal-form-title').textContent = '編輯相簿照片';
+    $('gal-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 儲存變更';
+    $('gal-cancel').classList.remove('hidden');
+    $('gal-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (b.dataset.gdel !== undefined) {
+    if (!confirm('確定要刪除這張照片嗎？')) return;
+    write(() => F.deleteDoc(F.doc(db, 'gallery', b.dataset.gdel)), '照片已刪除');
+  } else if (b.dataset.gup !== undefined || b.dataset.gdown !== undefined) {
+    const i = +(b.dataset.gup ?? b.dataset.gdown);
+    const j = b.dataset.gup !== undefined ? i - 1 : i + 1;
+    if (!list[i] || !list[j]) return;
+    // 重新編號，避免順序值相同時交換無效
+    write(() => {
+      const ids = list.map((g) => g.id);
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+      const batch = F.writeBatch(db);
+      ids.forEach((id, n) => batch.update(F.doc(db, 'gallery', id), { order: n }));
+      return batch.commit();
+    });
+  }
+});
+
+// ===== 事件：前台內容 / 網站設定 =====
+$('btn-reset-content').addEventListener('click', async () => {
+  if (!confirm('確定要把首頁所有文字與圖片還原成預設嗎？（公告、相簿不受影響）')) return;
+  const old = Object.values(content.images);
+  if (await write(() => patchContent({ texts: {}, images: {} }), '首頁文字與圖片已還原')) old.forEach(dropUpload);
+});
+
+$('settings-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const line = $('set-line').value.trim(), fb = $('set-fb').value.trim();
+  if (!isLink(line) || !isLink(fb)) { toast('連結需以 https:// 開頭'); return; }
+  write(() => patchContent({
+    bar: $('set-bar').value.trim(),
+    phone: $('set-phone').value.trim(),
+    hours: $('set-hours').value.trim(),
+    address: $('set-address').value.trim(),
+    lineUrl: line,
+    fbUrl: fb
+  }), '網站設定已儲存，所有訪客可見');
+});
+$('btn-reset').addEventListener('click', async () => {
+  if (!confirm('確定要還原「所有」公告、相簿、文字、圖片與設定為預設內容嗎？此動作無法復原。')) return;
+  const oldUploads = Object.values(content.images);
+  const ok = await write(() => {
+    const b = F.writeBatch(db);
+    b.set(contentRef, { ...clone(DEFAULT_CONTENT), updatedAt: F.serverTimestamp() });
+    galleryDocs.forEach((g) => b.delete(F.doc(db, 'gallery', g.id)));
+    DEFAULT_GALLERY.forEach(({ id, ...data }) => b.set(F.doc(db, 'gallery', id), data));
+    return b.commit();
+  }, '已還原預設內容');
+  if (ok) {
+    oldUploads.forEach(dropUpload);
+    resetAnnForm();
+    resetGalForm();
+    fillSettings();
+  }
+});
+
+// ===== 啟動 =====
+window.addEventListener('hashchange', route);
+resetAnnForm();
+resetGalForm();
+refreshHome();
+route();
+initFirebase();
+</script>
+</body>
+</html>
