@@ -50,11 +50,12 @@
 | 路徑 | 內容 | 權限 |
 | --- | --- | --- |
 | `site/content` | `bar, phone, hours, address, lineUrl, fbUrl, announcements[], texts{}, images{}, updatedAt` | 所有人可讀，管理員可寫 |
-| `gallery/{id}` | `order, color, tag, title, desc, img` | 所有人可讀，管理員可寫 |
-| `uploads/{id}` | `data`（前台編輯上傳的圖片），`images.{編號}` 存成 `upload:{id}` | 所有人可讀，管理員可寫 |
+| `gallery/{id}` | 一本相簿：`order, color, tag, title, desc, photos[]`（第一張是封面；舊資料只有單張 `img`，用 `photosOf()` 相容） | 所有人可讀，管理員可寫 |
+| `uploads/{id}` | `data`：上傳的圖片（前台編輯、相簿照片都存這裡），引用時寫成 `upload:{id}` | 所有人可讀，管理員可寫 |
 | `logins/{id}` | `email, at` | 只有管理員可讀、可新增 |
 
-- 沒用 Firebase Storage（新專案需 Blaze 付費方案）：照片在瀏覽器壓縮成 JPEG data URL 直接存 Firestore（單筆上限 1MB，程式壓到約 600KB 內）。免費方案下載流量有限，照片多時建議改貼圖片網址。
+- 沒用 Firebase Storage（新專案需 Blaze 付費方案）：照片在瀏覽器壓縮成 JPEG data URL，**每張各存一筆 `uploads`**（單筆上限 1MB，程式壓到約 600KB 內）。前台用 `<img data-ref>` + `hydrateImgs()` 把 `upload:{id}` 換成圖片；首頁只載封面，點開相簿才載其他張。刪除相簿／移除照片時會一併刪掉對應的 `uploads`。免費方案下載流量有限，照片多時建議改貼圖片網址。
+- 前台編輯時，圖片上若蓋著 `.absolute.inset-0` 遮罩，CSS 會讓點擊穿透到圖片（遮罩內的文字仍可編輯）。
 - 第一次有管理員登入時，`ensureSeed()` 把 `DEFAULT_CONTENT`、`DEFAULT_GALLERY` 寫進資料庫；資料庫沒資料時前台顯示這些預設值。
 - 即時同步用 `onSnapshot`，訪客開著網頁也會自動更新。
 - 新增管理員：Firebase Authentication 新增使用者 → Email 同時加到 `firebase-config.js` 的 `ADMIN_EMAILS` 和 `firestore.rules`（請使用者重新發布規則）。
@@ -67,6 +68,6 @@
 - 這台電腦沒有 Java，無法跑 Firebase Emulator。之前是用自製的假 Firebase 模組（localStorage 版）測試邏輯；要在真站測寫入只能請使用者自己登入操作（不可代為輸入密碼）。
 
 ## 待辦／已知事項
-- 相簿預設照片、首頁 logo 與特展圖片是 Unsplash 佔位圖（不是爬蟲），請使用者在後台換成館內照片。
+- 相簿預設照片、首頁 logo 與特展圖片是 Unsplash 佔位圖（不是爬蟲），請使用者在後台換成館內照片。其中「鬆獅蜥與巨蜥互動分享會」的預設圖（photo-1574063413132）在 Unsplash 已失效（404）。
 - LINE 連結、Facebook、電話、地址仍是範例資料，使用者會在後台「網站設定」修改。
 - 首頁有一則使用者建立的「測試」公告，可提醒刪除。

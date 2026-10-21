@@ -66,6 +66,10 @@
     body.editing #view-home [data-k]:hover, body.editing #view-home [data-k]:focus { outline-color: #dc2626; background-color: rgba(254,226,226,.35); }
     body.editing #view-home img[data-k] { cursor: pointer; }
     body.editing #view-home img[data-k]:hover { filter: brightness(.75); }
+    body.editing #view-home img[data-k] { outline-offset: -3px; }
+    /* 圖片上蓋著漸層遮罩時，讓點擊穿透到圖片（遮罩裡的文字仍可編輯） */
+    body.editing #view-home .absolute.inset-0 { pointer-events: none; }
+    body.editing #view-home .absolute.inset-0 [data-k] { pointer-events: auto; }
     body.editing #view-home .reveal { opacity: 1 !important; transform: none !important; }
     body.editing #view-home { padding-bottom: 96px; }
     body { font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif; }
@@ -822,7 +826,7 @@
 <section class="hidden space-y-6" data-panel="gallery">
 <div>
 <h2 class="text-2xl font-black text-zinc-900">相簿管理</h2>
-<p class="text-xs text-zinc-500 mt-1">照片會顯示在首頁「精彩館內花絮」區塊，訪客點照片可放大觀看。可用 ↑↓ 調整順序。</p>
+<p class="text-xs text-zinc-500 mt-1">每本相簿可以放多張照片（第一張是封面），會顯示在首頁「精彩館內花絮」區塊；訪客點封面可以左右翻看整本相簿。可用 ↑↓ 調整相簿順序。</p>
 </div>
 <form class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-4" id="gal-form">
 <input id="gal-id" type="hidden"/>
@@ -830,20 +834,24 @@
 <h3 class="text-sm font-bold text-zinc-900" id="gal-form-title">新增相簿照片</h3>
 <button class="hidden text-xs font-bold text-zinc-500 hover:text-zinc-800" id="gal-cancel" type="button">取消編輯</button>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-4">
-<div class="relative h-36 rounded-xl bg-zinc-100 border border-dashed border-zinc-300 overflow-hidden flex items-center justify-center text-zinc-400">
-<div class="text-center text-[11px]"><i class="ph ph-image text-3xl block"></i>照片預覽</div>
-<img alt="照片預覽" class="hidden absolute inset-0 w-full h-full object-cover" id="gal-preview"/>
-</div>
 <div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-zinc-700">相簿照片 <span class="font-normal text-zinc-400">（第一張是封面）</span></span>
+<span class="text-[11px] text-zinc-400" id="gal-count">0 張</span>
+</div>
+<div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-2" id="gal-photos"></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 <label class="block">
-<span class="text-xs font-bold text-zinc-700">從電腦 / 手機上傳照片</span>
-<input accept="image/*" class="mt-1 block w-full text-xs text-zinc-600 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-brand-red file:text-white file:font-bold hover:file:bg-brand-darkred" id="gal-file" type="file"/>
+<span class="text-xs font-bold text-zinc-700">從電腦 / 手機加入照片（可一次選多張）</span>
+<input accept="image/*" class="mt-1 block w-full text-xs text-zinc-600 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-brand-red file:text-white file:font-bold hover:file:bg-brand-darkred" id="gal-file" multiple type="file"/>
 </label>
-<label class="block">
+<div>
 <span class="text-xs font-bold text-zinc-700">或貼上圖片網址</span>
-<input class="mt-1 w-full px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-url" placeholder="https://..." type="url"/>
-</label>
+<div class="mt-1 flex gap-2">
+<input class="flex-1 min-w-0 px-3 py-2.5 bg-zinc-50 border border-zinc-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red outline-none" id="gal-url" placeholder="https://..." type="url"/>
+<button class="px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold shrink-0" id="gal-url-add" type="button">加入</button>
+</div>
+</div>
 </div>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -969,13 +977,18 @@
 </div>
 </div>
 <!-- 相簿放大檢視 -->
-<div class="hidden fixed inset-0 z-[80] bg-black/85 items-center justify-center p-4 cursor-zoom-out" id="lightbox">
+<div class="hidden fixed inset-0 z-[80] bg-black/90 items-center justify-center p-4" id="lightbox">
+<button aria-label="關閉" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center" id="lb-close" type="button"><i class="ph ph-x"></i></button>
+<button aria-label="上一張" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center" id="lb-prev" type="button"><i class="ph ph-caret-left"></i></button>
+<button aria-label="下一張" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center" id="lb-next" type="button"><i class="ph ph-caret-right"></i></button>
 <figure class="max-w-4xl w-full">
-<img alt="" class="w-full max-h-[78vh] object-contain rounded-xl" id="lightbox-img"/>
+<img alt="" class="w-full max-h-[68vh] object-contain rounded-xl select-none" id="lightbox-img"/>
 <figcaption class="text-white text-center mt-4">
+<div class="text-xs font-mono text-zinc-400 mb-1" id="lb-count"></div>
 <div class="font-bold" id="lightbox-title"></div>
 <div class="text-xs text-zinc-300 mt-1" id="lightbox-desc"></div>
 </figcaption>
+<div class="flex gap-2 justify-center mt-4 overflow-x-auto pb-1" id="lb-thumbs"></div>
 </figure>
 </div>
 <!-- Toast -->
@@ -1199,14 +1212,27 @@ function renderAnn() {
   }).join('') : '<div class="p-5 rounded-2xl border border-dashed border-zinc-300 text-center text-xs text-zinc-400">目前沒有新公告</div>';
 }
 
+// 相簿的照片清單（舊資料只有單張 img）
+const photosOf = (g) => (g.photos && g.photos.length ? g.photos : g.img ? [g.img] : []);
+
+// <img data-ref="網址或 upload:編號"> 換成真正的圖片
+function hydrateImgs(root) {
+  root.querySelectorAll('img[data-ref]').forEach((img) => {
+    const ref = img.dataset.ref;
+    if (ref) resolveImg(ref, (src) => { if (img.dataset.ref === ref) img.src = src; });
+  });
+}
+
 function renderGallery() {
   const list = gallery();
   $('gallery-list').innerHTML = list.length ? list.map((g, i) => {
     const color = COLORS[g.color] || COLORS.red;
+    const photos = photosOf(g);
     return `<div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 shadow-sm group cursor-zoom-in" data-gi="${i}">
       <div class="h-48 overflow-hidden bg-zinc-900 relative">
-        <img alt="${esc(g.title)}" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-500" loading="lazy" src="${esc(g.img)}"/>
+        <img alt="${esc(g.title)}" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-500" data-ref="${esc(photos[0] || '')}" loading="lazy"/>
         <span class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 text-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition"><i class="ph ph-magnifying-glass-plus"></i></span>
+        ${photos.length > 1 ? `<span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-black/60 text-white text-[11px] font-bold flex items-center gap-1"><i class="ph ph-images"></i> ${photos.length} 張</span>` : ''}
       </div>
       <div class="p-5">
         <span class="text-[11px] font-bold ${color.cls} px-2 py-0.5 rounded">${esc(g.tag)}</span>
@@ -1215,6 +1241,7 @@ function renderGallery() {
       </div>
     </div>`;
   }).join('') : '<div class="col-span-full p-10 text-center text-sm text-zinc-400 border border-dashed border-zinc-300 rounded-2xl">相簿目前沒有照片</div>';
+  hydrateImgs($('gallery-list'));
 }
 
 function refreshHome() {
@@ -1288,20 +1315,66 @@ function updateFloating() {
 addEventListener('scroll', updateFloating, { passive: true });
 $('to-top').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-// 相簿放大
+// 相簿放大：可左右切換同一本相簿的照片
+const lb = { photos: [], i: 0 };
+function lbShow(i) {
+  const n = lb.photos.length;
+  lb.i = (i + n) % n;
+  const ref = lb.photos[lb.i], img = $('lightbox-img');
+  img.removeAttribute('src');
+  img.dataset.ref = ref;
+  resolveImg(ref, (src) => { if (img.dataset.ref === ref) img.src = src; });
+  $('lb-count').textContent = n > 1 ? `${lb.i + 1} / ${n}` : '';
+  $('lb-prev').classList.toggle('hidden', n < 2);
+  $('lb-next').classList.toggle('hidden', n < 2);
+  $('lb-thumbs').querySelectorAll('img').forEach((t, k) => {
+    t.classList.toggle('opacity-100', k === lb.i);
+    t.classList.toggle('ring-2', k === lb.i);
+    t.classList.toggle('opacity-50', k !== lb.i);
+    if (k === lb.i) t.scrollIntoView({ block: 'nearest', inline: 'center' });
+  });
+}
+function openLightbox(g) {
+  lb.photos = photosOf(g);
+  if (!lb.photos.length) return;
+  $('lightbox-img').alt = g.title;
+  $('lightbox-title').textContent = g.title;
+  $('lightbox-desc').textContent = g.desc;
+  $('lb-thumbs').innerHTML = lb.photos.length > 1 ? lb.photos.map((p, k) =>
+    `<img alt="第 ${k + 1} 張" class="w-14 h-14 object-cover rounded-lg cursor-pointer ring-white shrink-0 transition" data-lb="${k}" data-ref="${esc(p)}"/>`).join('') : '';
+  hydrateImgs($('lb-thumbs'));
+  show('lightbox', true);
+  lbShow(0);
+}
+const closeLightbox = () => show('lightbox', false);
+const lightboxOpen = () => !$('lightbox').classList.contains('hidden');
 $('gallery-list').addEventListener('click', (e) => {
   const card = e.target.closest('[data-gi]');
   if (!card || editMode) return;
   const g = gallery()[+card.dataset.gi];
-  if (!g) return;
-  $('lightbox-img').src = g.img;
-  $('lightbox-img').alt = g.title;
-  $('lightbox-title').textContent = g.title;
-  $('lightbox-desc').textContent = g.desc;
-  show('lightbox', true);
+  if (g) openLightbox(g);
 });
-$('lightbox').addEventListener('click', () => show('lightbox', false));
-addEventListener('keydown', (e) => { if (e.key === 'Escape') { show('lightbox', false); show('img-modal', false); } });
+$('lightbox').addEventListener('click', (e) => {
+  const thumb = e.target.closest('[data-lb]');
+  if (thumb) lbShow(+thumb.dataset.lb);
+  else if (e.target.closest('#lb-prev')) lbShow(lb.i - 1);
+  else if (e.target.closest('#lb-next')) lbShow(lb.i + 1);
+  else if (e.target.id === 'lightbox' || e.target.closest('#lb-close')) closeLightbox();
+});
+// 手機左右滑動切換
+let touchX = null;
+$('lightbox').addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+$('lightbox').addEventListener('touchend', (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  touchX = null;
+  if (Math.abs(dx) > 40 && lb.photos.length > 1) lbShow(lb.i + (dx < 0 ? 1 : -1));
+});
+addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeLightbox(); show('img-modal', false); }
+  if (lightboxOpen() && e.key === 'ArrowLeft') lbShow(lb.i - 1);
+  if (lightboxOpen() && e.key === 'ArrowRight') lbShow(lb.i + 1);
+});
 
 // ===== 寫入 Firebase =====
 async function write(fn, okMsg) {
@@ -1510,10 +1583,12 @@ function renderAdminLists() {
   const list = gallery();
   $('gal-table').innerHTML = list.length ? list.map((g, i) => {
     const color = COLORS[g.color] || COLORS.red;
+    const photos = photosOf(g);
     return `<div class="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-      <img alt="" class="w-full sm:w-24 h-32 sm:h-16 object-cover rounded-lg bg-zinc-100 shrink-0" loading="lazy" src="${esc(g.img)}"/>
+      <img alt="" class="w-full sm:w-24 h-32 sm:h-16 object-cover rounded-lg bg-zinc-100 shrink-0" data-ref="${esc(photos[0] || '')}" loading="lazy"/>
       <div class="flex-1 min-w-0">
         <span class="text-[11px] font-bold ${color.cls} px-2 py-0.5 rounded">${esc(g.tag)}</span>
+        <span class="text-[11px] text-zinc-400 ml-1"><i class="ph ph-images"></i> ${photos.length} 張</span>
         <div class="text-sm font-bold text-zinc-900 truncate mt-1">${esc(g.title)}</div>
         <div class="text-xs text-zinc-500 truncate">${esc(g.desc)}</div>
       </div>
@@ -1524,7 +1599,8 @@ function renderAdminLists() {
         <button class="px-3 py-1.5 rounded-lg text-xs font-bold bg-red-50 hover:bg-red-100 text-brand-red" data-gdel="${esc(g.id)}" type="button"><i class="ph ph-trash"></i> 刪除</button>
       </div>
     </div>`;
-  }).join('') : '<div class="p-6 text-center text-xs text-zinc-400">相簿是空的，從上方表單上傳第一張照片吧！</div>';
+  }).join('') : '<div class="p-6 text-center text-xs text-zinc-400">還沒有相簿，從上方表單建立第一本吧！</div>';
+  hydrateImgs($('gal-table'));
 }
 
 function fillSettings() {
@@ -1772,49 +1848,102 @@ $('ann-table').addEventListener('click', (e) => {
 
 // ===== 事件：相簿管理 =====
 $('gal-color').innerHTML = Object.entries(COLORS).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
-let galImg = null;
-function setGalPreview(src) {
-  galImg = src;
-  $('gal-preview').classList.toggle('hidden', !src);
-  if (src) $('gal-preview').src = src; else $('gal-preview').removeAttribute('src');
+// 表單中的照片：已存的是網址或 upload:編號，剛加入的是 data:image（按儲存才上傳）
+const MAX_PHOTOS = 30;
+let galPhotos = [];
+function renderGalPhotos() {
+  $('gal-count').textContent = `${galPhotos.length} 張`;
+  $('gal-photos').innerHTML = galPhotos.length ? galPhotos.map((p, k) => `
+    <div class="relative aspect-square rounded-lg overflow-hidden bg-zinc-100 border ${k === 0 ? 'border-brand-red ring-2 ring-brand-red' : 'border-zinc-200'}">
+      <img alt="" class="w-full h-full object-cover" data-ref="${esc(p)}"/>
+      ${k === 0
+        ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-brand-red text-white text-[10px] font-bold">封面</span>'
+        : `<button class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-white/90 hover:bg-white text-zinc-800 text-[10px] font-bold" data-pcover="${k}" type="button">設為封面</button>`}
+      <button aria-label="移除這張" class="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 hover:bg-black text-white text-xs flex items-center justify-center" data-pdel="${k}" type="button"><i class="ph ph-x"></i></button>
+    </div>`).join('')
+    : '<div class="col-span-full h-24 rounded-xl border border-dashed border-zinc-300 flex items-center justify-center text-[11px] text-zinc-400"><i class="ph ph-images text-2xl mr-2"></i>尚未加入照片</div>';
+  hydrateImgs($('gal-photos'));
+}
+function addGalPhoto(src) {
+  if (galPhotos.length >= MAX_PHOTOS) { toast(`一本相簿最多 ${MAX_PHOTOS} 張`); return false; }
+  galPhotos.push(src);
+  renderGalPhotos();
+  return true;
 }
 function resetGalForm() {
   $('gal-form').reset();
   $('gal-id').value = '';
-  setGalPreview(null);
-  $('gal-form-title').textContent = '新增相簿照片';
-  $('gal-submit').innerHTML = '<i class="ph ph-plus"></i> 新增到相簿';
+  galPhotos = [];
+  renderGalPhotos();
+  $('gal-form-title').textContent = '建立新相簿';
+  $('gal-submit').innerHTML = '<i class="ph ph-plus"></i> 建立相簿';
   $('gal-submit').disabled = false;
   $('gal-cancel').classList.add('hidden');
 }
-$('gal-file').addEventListener('change', (e) => {
-  const f = e.target.files[0];
-  if (!f) return;
-  compressImage(f, 1000).then((d) => { setGalPreview(d); $('gal-url').value = ''; }).catch(() => toast('無法讀取這張圖片'));
+$('gal-file').addEventListener('change', async (e) => {
+  const files = [...e.target.files];
+  e.target.value = '';
+  for (let k = 0; k < files.length; k++) {
+    if (files.length > 1) toast(`處理照片中 ${k + 1} / ${files.length}…`);
+    try {
+      if (!addGalPhoto(await compressImage(files[k], 1200))) break;
+    } catch (err) {
+      toast('有一張照片無法讀取，已略過');
+    }
+  }
+  if (files.length > 1) toast(`已加入 ${files.length} 張照片，記得按下方儲存`);
 });
-$('gal-url').addEventListener('input', (e) => {
-  const v = e.target.value.trim();
-  if (isLink(v)) setGalPreview(v);
+$('gal-url-add').addEventListener('click', () => {
+  const v = $('gal-url').value.trim();
+  if (!isLink(v)) { toast('圖片網址需以 https:// 開頭'); return; }
+  if (addGalPhoto(v)) $('gal-url').value = '';
+});
+$('gal-photos').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.dataset.pdel !== undefined) galPhotos.splice(+b.dataset.pdel, 1);
+  else if (b.dataset.pcover !== undefined) galPhotos.unshift(galPhotos.splice(+b.dataset.pcover, 1)[0]);
+  renderGalPhotos();
 });
 $('gal-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (!galImg || !isImgSrc(galImg)) { toast('請先上傳照片或貼上圖片網址'); return; }
+  if (!galPhotos.length) { toast('請至少加入一張照片'); return; }
   const id = $('gal-id').value || uid('g');
   const existing = galleryDocs.find((g) => g.id === id);
+  const before = existing ? photosOf(existing) : [];
   const minOrder = galleryDocs.reduce((m, g) => Math.min(m, g.order ?? 0), 0);
-  const data = {
-    order: existing ? (existing.order ?? 0) : minOrder - 1,   // 新照片排最前面
-    color: $('gal-color').value,
-    tag: $('gal-tag').value.trim(),
-    title: $('gal-title').value.trim(),
-    desc: $('gal-desc').value.trim(),
-    img: galImg
-  };
+  const uploaded = [];
+  let refs = [];
   $('gal-submit').disabled = true;
-  $('gal-submit').textContent = '上傳中…';
-  const ok = await write(() => F.setDoc(F.doc(db, 'gallery', id), data), existing ? '照片已更新' : '📸 照片已新增到首頁相簿');
-  if (ok) resetGalForm();
-  else { $('gal-submit').disabled = false; $('gal-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 再試一次'; }
+  const ok = await write(async () => {
+    for (let k = 0; k < galPhotos.length; k++) {
+      $('gal-submit').textContent = `上傳中 ${k + 1} / ${galPhotos.length}…`;
+      const p = galPhotos[k];
+      if (p.startsWith('data:')) {
+        const ref = await storeUpload(p);   // 每張照片各存一筆，避免超過 1MB 上限
+        uploaded.push(ref);
+        refs.push(ref);
+      } else {
+        refs.push(p);
+      }
+    }
+    await F.setDoc(F.doc(db, 'gallery', id), {
+      order: existing ? (existing.order ?? 0) : minOrder - 1,   // 新相簿排最前面
+      color: $('gal-color').value,
+      tag: $('gal-tag').value.trim(),
+      title: $('gal-title').value.trim(),
+      desc: $('gal-desc').value.trim(),
+      photos: refs
+    });
+  }, existing ? '相簿已更新' : `📸 相簿已建立（${galPhotos.length} 張）`);
+  if (ok) {
+    before.filter((r) => !refs.includes(r)).forEach(dropUpload);   // 清掉被移除的照片
+    resetGalForm();
+  } else {
+    uploaded.forEach(dropUpload);
+    $('gal-submit').disabled = false;
+    $('gal-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 再試一次';
+  }
 });
 $('gal-cancel').addEventListener('click', resetGalForm);
 $('gal-table').addEventListener('click', async (e) => {
@@ -1829,16 +1958,18 @@ $('gal-table').addEventListener('click', async (e) => {
     $('gal-tag').value = item.tag;
     $('gal-title').value = item.title;
     $('gal-desc').value = item.desc;
-    $('gal-url').value = isLink(item.img) ? item.img : '';
+    $('gal-url').value = '';
     $('gal-file').value = '';
-    setGalPreview(item.img);
-    $('gal-form-title').textContent = '編輯相簿照片';
+    galPhotos = [...photosOf(item)];
+    renderGalPhotos();
+    $('gal-form-title').textContent = '編輯相簿';
     $('gal-submit').innerHTML = '<i class="ph ph-floppy-disk"></i> 儲存變更';
     $('gal-cancel').classList.remove('hidden');
     $('gal-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else if (b.dataset.gdel !== undefined) {
-    if (!confirm('確定要刪除這張照片嗎？')) return;
-    write(() => F.deleteDoc(F.doc(db, 'gallery', b.dataset.gdel)), '照片已刪除');
+    const item = list.find((g) => g.id === b.dataset.gdel);
+    if (!item || !confirm(`確定要刪除「${item.title}」這本相簿（共 ${photosOf(item).length} 張照片）嗎？`)) return;
+    if (await write(() => F.deleteDoc(F.doc(db, 'gallery', item.id)), '相簿已刪除')) photosOf(item).forEach(dropUpload);
   } else if (b.dataset.gup !== undefined || b.dataset.gdown !== undefined) {
     const i = +(b.dataset.gup ?? b.dataset.gdown);
     const j = b.dataset.gup !== undefined ? i - 1 : i + 1;
@@ -1876,7 +2007,7 @@ $('settings-form').addEventListener('submit', (e) => {
 });
 $('btn-reset').addEventListener('click', async () => {
   if (!confirm('確定要還原「所有」公告、相簿、文字、圖片與設定為預設內容嗎？此動作無法復原。')) return;
-  const oldUploads = Object.values(content.images);
+  const oldUploads = [...Object.values(content.images), ...galleryDocs.flatMap(photosOf)];
   const ok = await write(() => {
     const b = F.writeBatch(db);
     b.set(contentRef, { ...clone(DEFAULT_CONTENT), updatedAt: F.serverTimestamp() });
